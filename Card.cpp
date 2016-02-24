@@ -85,4 +85,43 @@
         return velocity;
     }
 
+    /*---------------------------SETTERS-----------------------------------------*/
+    void Card::setHeight(int h)
+    {
+        height = h;
+    }
+    void Card::setWidth(int w)
+    {
+        width = w;
+    }
+
+    void Card::setLifeTime(double inLife)
+    {
+        lifeTime = inLife;
+    }
+
+    void Card::addCategory( std::string inCat)
+    {
+        categories.push_back(inCat);
+    }
+
+    void Card::setPos(glm::vec3 inPos)
+    {
+        pos = inPos;
+    }
+
+    void Card::setVelocity(glm::vec2 inVel)
+    {
+        velocity = inVel;
+    }
+
+    void Card::changeLang()
+    {
+        if(isSwede)
+            isSwede = false;
+        else
+            isSwede = true;
+    }
+
+    /*----------------------------------------------------------------------------*/
 
