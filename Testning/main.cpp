@@ -264,28 +264,16 @@ bool loadMedia()
 }
 
 
-void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position) //  void move(glm::vec2 velocity);
+void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position)
 {
-    //    pos = glm::vec3(200, 200, 200);
-    //pos[1] = pos[1] + 1;
-    
-    
     std::time_t after = time(0);
     
     curve  = sin ((after - now)*0.0735);
     curve2  = sin((after - now) * 0.01);
-//    randomNumber = rand() % 10 + 1;
-    
+    //randomNumber = rand() % 10 + 1;
     
     position[0] += ((vel[0] *curve)/10) ;
-    //position[1] += ((vel[1] *curve)/10); // + fungerar inte av npgon anledning...
-    // std::cout << std::time<< std::endl;
-    
     position[1] += (vel[1] * curve2);
-    //position[1] += ((vel[1] +curve2)/10) ;
-    
-
-    
     
     if(position[0] > (SCREEN_WIDTH-170) || position[0] < 0 ) // bildsize är 170
     {
@@ -300,53 +288,7 @@ void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position) //  void move(
 }
 
 
-/*
- bool collision(glm::vec3 &position, glm::vec3 &position2 )
- {
- //The sides of the rectangles
- int leftA, leftB;
- int rightA, rightB;
- int topA, topB;
- int bottomA, bottomB;
- 
- //Calculate the sides of rect A
- leftA =     position[0];
- rightA =    position[0] + width;
- topA =    position[1];
- bottomA = position[1] + height;
- 
- //Calculate the sides of rect B
- leftB = position2[0];
- rightB = position2[0] + width2;
- topB = position2[1];
- bottomB = position2[1] + height2;
- 
- //If any of the sides from A are outside of B
- if( bottomA <= topB )
- {
- return false;
- }
- 
- if( topA >= bottomB )
- {
- return false;
- }
- 
- if( rightA <= leftB )
- {
- return false;
- }
- 
- if( leftA >= rightB )
- {
- return false;
- }
- 
- //If none of the sides from A are outside B
- return true;
- 
- 
- }*/
+
 
 
 
@@ -432,15 +374,12 @@ int main( int argc, char* args[] ) // ------------------------main--------------
                 //Render background texture to screen
                 // bool col = collision(pos, pos2 );
                 
-                gBackgroundTexture.render( 0, 0);
-                move(velocity , now, pos );
+                gBackgroundTexture.render( 0, 0); // Render background to screen
+                move(velocity , now, pos ); //make 
                 move(velocity2 , now, pos2);
                 
-                
-                //Render Foo' to the screen
-                gFooTexture.render( pos[0], pos[1]);
+                gFooTexture.render( pos[0], pos[1]); //Render to the screen
                 farTexture.render( pos2[0], pos2[1]);
-                
                 
                 
                 //Update screen
@@ -449,12 +388,59 @@ int main( int argc, char* args[] ) // ------------------------main--------------
         }
     }
     
-    
     //Free resources and close SDL
     close();
     
     return 0;
 }
+
+/*
+ bool collision(glm::vec3 &position, glm::vec3 &position2 )
+ {
+ //The sides of the rectangles
+ int leftA, leftB;
+ int rightA, rightB;
+ int topA, topB;
+ int bottomA, bottomB;
+ 
+ //Calculate the sides of rect A
+ leftA =     position[0];
+ rightA =    position[0] + width;
+ topA =    position[1];
+ bottomA = position[1] + height;
+ 
+ //Calculate the sides of rect B
+ leftB = position2[0];
+ rightB = position2[0] + width2;
+ topB = position2[1];
+ bottomB = position2[1] + height2;
+ 
+ //If any of the sides from A are outside of B
+ if( bottomA <= topB )
+ {
+ return false;
+ }
+ 
+ if( topA >= bottomB )
+ {
+ return false;
+ }
+ 
+ if( rightA <= leftB )
+ {
+ return false;
+ }
+ 
+ if( leftA >= rightB )
+ {
+ return false;
+ }
+ 
+ //If none of the sides from A are outside B
+ return true;
+ 
+ 
+ }*/
 
 
 /// >>>>>>>>>>>>>>>> TEST <<<<<<<<<<<<<<<<
