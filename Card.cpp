@@ -13,44 +13,22 @@ Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT,
     , isSwede(lang)
     , pos(inPos)
     , velocity(inVel)
-    ,imgPath(textPath)
+    , imgPath(textPath)
 {
 }
 
 
 /*-----------------Transformation functions-----------------*/
-/*void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position){
-    
-    std::time_t after = time(0);
-    
-    double curve  = abs(10* sin ( after - now));
-    double curve2  = abs(10* cos ( after - now));
-    int randomNumber = rand() % 10 + 1;
-    
-    
-    position[0] += ((vel[0] *curve * randomNumber)/100) ;
-    position[1] += ((vel[1] *curve2 * randomNumber)/100); // + fungerar inte av npgon anledning...
-    // std::cout << std::time<< std::endl;
-    
-    
-    if(position[0] > (SCREEN_WIDTH-170) || position[0] < 0 ) // bildsize är 170
-    {
-        vel[0]  = (vel[0] * (- 1));
-    }
-    
-    if(position[1] > (SCREEN_HEIGHT-158) || position[1] < 0 )
-    {
-        vel[1]  = (vel[1]  * (- 1));
-    }
-}*/
+void Card::move(glm::vec2 velocity)
+{
+    ;
+}
 
 // Destructor
 Card::~Card()
 {
   SDL_DestroyTexture(cardTexture);
   cardTexture = NULL;
-
-
 }
 /*----------------------------------------------------------*/
 
@@ -191,12 +169,6 @@ bool Card::loadTexture(SDL_Renderer* gRenderer)
         {
             printf( "Unable to create texture from %s! SDL Error: %s\n", imgPath.c_str(), SDL_GetError() );
         }
-        else
-        {
-            //Get image dimensions
-            width = loadedSurface->w;
-            height = loadedSurface->h;
-        }
 
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
@@ -210,6 +182,7 @@ bool Card::loadTexture(SDL_Renderer* gRenderer)
 void Card::render( SDL_Renderer* gRenderer)
 {
     //Set rendering space and render to screen
-    SDL_Rect renderQuad = {pos.x , pos.y, width, height };
+    SDL_Rect renderQuad = {pos.x , pos.y, width, height};
+
     SDL_RenderCopy( gRenderer, cardTexture, NULL, &renderQuad );
 }
