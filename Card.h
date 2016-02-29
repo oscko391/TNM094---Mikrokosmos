@@ -1,9 +1,19 @@
-#include <glm/glm.hpp>
+#include "glm.hpp"
 #include <vector>
 #include <string>
-#include <SDL.h>
-#include <SDL_image.h>
 #include <stdio.h>
+#include <SDL2_image/SDL_image.h>
+#include <SDL2/SDL.h>
+#include <string>
+
+#include <cmath>
+#include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
+#include <iostream>
+
+//Screen dimension constants
+const int SCREEN_WIDTH = 1200; // Flyttas till main sen? 
+const int SCREEN_HEIGHT = 800;
+
 
 class Card
 {
@@ -35,8 +45,9 @@ public:
     Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel);
     ~Card();
     //Transformation functions
-    void move(glm::vec2 velocity);
-
+//    void move(glm::vec2 velocity);
+    void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position);
+    
     //getters
     int getHeight();
     int getWidth();
