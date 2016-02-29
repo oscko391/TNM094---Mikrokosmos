@@ -19,10 +19,30 @@ Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT,
 
 
 /*-----------------Transformation functions-----------------*/
-void Card::move(glm::vec2 velocity)
-{
-    ;
-}
+/*void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position){
+    
+    std::time_t after = time(0);
+    
+    double curve  = abs(10* sin ( after - now));
+    double curve2  = abs(10* cos ( after - now));
+    int randomNumber = rand() % 10 + 1;
+    
+    
+    position[0] += ((vel[0] *curve * randomNumber)/100) ;
+    position[1] += ((vel[1] *curve2 * randomNumber)/100); // + fungerar inte av npgon anledning...
+    // std::cout << std::time<< std::endl;
+    
+    
+    if(position[0] > (SCREEN_WIDTH-170) || position[0] < 0 ) // bildsize är 170
+    {
+        vel[0]  = (vel[0] * (- 1));
+    }
+    
+    if(position[1] > (SCREEN_HEIGHT-158) || position[1] < 0 )
+    {
+        vel[1]  = (vel[1]  * (- 1));
+    }
+}*/
 
 // Destructor
 Card::~Card()

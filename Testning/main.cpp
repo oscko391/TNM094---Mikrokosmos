@@ -1,25 +1,13 @@
 
-
-/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
- and may not be redistributed without written permission.*/
-
-//Using SDL and standard IO
-//#include <SDL2/SDL.h>
-//#include <stdio.h>
-/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
- and may not be redistributed without written permission.*/
-
 //Using SDL and standard IO
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include "glm.hpp"
-#include "trigonometric.hpp"
 #include <string>
 #include <SDL2_image/SDL_image.h>
 #include <cmath>
 #include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 #include <iostream>
-
 
 // KORT 1
 glm::vec2 velocity;
@@ -38,7 +26,6 @@ int a2;
 int b2;
 int width2 = 200;
 int height2 = 149;
-
 
 double curve;
 double curve2;
@@ -277,7 +264,7 @@ bool loadMedia()
 }
 
 
-void move( glm::vec2 vel,  std::time_t now ,glm::vec3 &position, int &aNum, int &bNum) //  void move(glm::vec2 velocity);
+void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position) //  void move(glm::vec2 velocity);
 {
     //    pos = glm::vec3(200, 200, 200);
     //pos[1] = pos[1] + 1;
@@ -285,26 +272,30 @@ void move( glm::vec2 vel,  std::time_t now ,glm::vec3 &position, int &aNum, int 
     
     std::time_t after = time(0);
     
-    curve  = abs(10* sin ( after - now));
-    curve2  = abs(10* cos ( after - now));
-    randomNumber = rand() % 10 + 1;
+    curve  = sin ((after - now)*0.0735);
+    curve2  = sin((after - now) * 0.01);
+//    randomNumber = rand() % 10 + 1;
     
     
-    position[0] += ((vel[0] * aNum *curve * randomNumber)/100) ;
-    position[1] += ((vel[1] * bNum *curve2 * randomNumber)/100); // + fungerar inte av npgon anledning...
+    position[0] += ((vel[0] *curve)/10) ;
+    //position[1] += ((vel[1] *curve)/10); // + fungerar inte av npgon anledning...
     // std::cout << std::time<< std::endl;
+    
+    position[1] += (vel[1] * curve2);
+    //position[1] += ((vel[1] +curve2)/10) ;
+    
+
     
     
     if(position[0] > (SCREEN_WIDTH-170) || position[0] < 0 ) // bildsize är 170
     {
-        aNum = (aNum * (- 1));
+        vel[0]  = (vel[0] * (- 1));
     }
     
     if(position[1] > (SCREEN_HEIGHT-158) || position[1] < 0 )
     {
-        bNum = (bNum * (- 1));
+        vel[1]  = (vel[1]  * (- 1));
     }
-    
     
 }
 
@@ -381,8 +372,8 @@ void close()
 
 int main( int argc, char* args[] ) // ------------------------main------------------
 {
-    velocity = glm::vec2(2.0, 3.0);
-    velocity2 = glm::vec2(4.0, 1.0);
+    velocity = glm::vec2(2.0, 2.0);
+    velocity2 = glm::vec2(1.0, 1.0);
     
     //std::cout << velocity[0] << std::endl;
     
@@ -435,15 +426,15 @@ int main( int argc, char* args[] ) // ------------------------main--------------
                 }
                 
                 //Clear screen
-                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                 SDL_RenderClear( gRenderer );
                 
                 //Render background texture to screen
                 // bool col = collision(pos, pos2 );
                 
                 gBackgroundTexture.render( 0, 0);
-                move(velocity , now, pos, a, b );
-                move(velocity2 , now, pos2, a2, b2);
+                move(velocity , now, pos );
+                move(velocity2 , now, pos2);
                 
                 
                 //Render Foo' to the screen
