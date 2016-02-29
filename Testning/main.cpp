@@ -245,12 +245,6 @@ bool loadMedia()
         success = false;
     }
     
-    /*   if( !filmTexture.loadFromFile( "//Users/madeleinerapp/Desktop/IMG_5814.MOV" ) )
-     {
-     printf( "Failed to load Film' texture image!\n" );
-     success = false;
-     }*/
-    
     //Load background texture
     if( !gBackgroundTexture.loadFromFile( "/Users/madeleinerapp/Documents/LiU/TNM094 Kandidaten/projekt/SDL_tutorial/SDL_tutorial/space.bmp" ) )
     {
@@ -258,34 +252,20 @@ bool loadMedia()
         success = false;
     }
     
-    
-    
     return success;
 }
 
 
-void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position) //  void move(glm::vec2 velocity);
+void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position)
 {
-    //    pos = glm::vec3(200, 200, 200);
-    //pos[1] = pos[1] + 1;
-    
-    
     std::time_t after = time(0);
     
     curve  = sin ((after - now)*0.0735);
     curve2  = sin((after - now) * 0.01);
-//    randomNumber = rand() % 10 + 1;
-    
+    //randomNumber = rand() % 10 + 1;
     
     position[0] += ((vel[0] *curve)/10) ;
-    //position[1] += ((vel[1] *curve)/10); // + fungerar inte av npgon anledning...
-    // std::cout << std::time<< std::endl;
-    
     position[1] += (vel[1] * curve2);
-    //position[1] += ((vel[1] +curve2)/10) ;
-    
-
-    
     
     if(position[0] > (SCREEN_WIDTH-170) || position[0] < 0 ) // bildsize är 170
     {
@@ -299,6 +279,89 @@ void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position) //  void move(
     
 }
 
+void close()
+{
+    //Free loaded images
+    gFooTexture.free();
+    gBackgroundTexture.free();
+    farTexture.free();
+    filmTexture.free();
+    
+    //Destroy window
+    SDL_DestroyRenderer( gRenderer );
+    SDL_DestroyWindow( gWindow );
+    gWindow = NULL;
+    gRenderer = NULL;
+    
+    //Quit SDL subsystems
+    IMG_Quit();
+    SDL_Quit();
+}
+
+int main( int argc, char* args[] ) // -------------------------------main----------------------------
+{
+    // Grejer som tillfälligt hör till move, ska inte följa med till card
+    velocity = glm::vec2(2.0, 2.0);
+    velocity2 = glm::vec2(1.0, 1.0);
+    pos = glm::vec3(133, 310, 200);
+    pos = glm::vec3(500, 110, 100);
+    std::time_t now = time(0);
+    
+    
+    //Start up SDL and create window
+    if( !init() )
+    {
+        printf( "Failed to initialize!\n" );
+    }
+    else
+    {
+        //Load media
+        if( !loadMedia() )
+        {
+            printf( "Failed to load media!\n" );
+        }
+        else
+        {
+            //Main loop flag
+            bool quit = false;
+            
+            //Event handler
+            SDL_Event e;
+            
+            //While application is running
+            while( !quit )
+            {
+                //Handle events on queue
+                while( SDL_PollEvent( &e ) != 0 )
+                {
+                    //User requests quit
+                    if( e.type == SDL_QUIT )
+                    {
+                        quit = true;
+                    }
+                }
+                
+                //Clear screen
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_RenderClear( gRenderer );
+                
+                gBackgroundTexture.render( 0, 0); // Render background to screen
+                move(velocity , now, pos ); //make 
+                move(velocity2 , now, pos2);
+                
+                gFooTexture.render( pos[0], pos[1]); //Render to the screen
+                farTexture.render( pos2[0], pos2[1]);
+                
+                SDL_RenderPresent( gRenderer ); //Update screen
+            }
+        }
+    }
+    
+    //Free resources and close SDL
+    close();
+    
+    return 0;
+}
 
 /*
  bool collision(glm::vec3 &position, glm::vec3 &position2 )
@@ -347,114 +410,6 @@ void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position) //  void move(
  
  
  }*/
-
-
-
-void close()
-{
-    //Free loaded images
-    gFooTexture.free();
-    gBackgroundTexture.free();
-    farTexture.free();
-    filmTexture.free();
-    
-    
-    //Destroy window
-    SDL_DestroyRenderer( gRenderer );
-    SDL_DestroyWindow( gWindow );
-    gWindow = NULL;
-    gRenderer = NULL;
-    
-    //Quit SDL subsystems
-    IMG_Quit();
-    SDL_Quit();
-}
-
-int main( int argc, char* args[] ) // ------------------------main------------------
-{
-    velocity = glm::vec2(2.0, 2.0);
-    velocity2 = glm::vec2(1.0, 1.0);
-    
-    //std::cout << velocity[0] << std::endl;
-    
-    
-    pos = glm::vec3(133, 310, 200);
-    pos = glm::vec3(500, 110, 100);
-    
-    a = 1;
-    b = 1;
-    a2 = 1;
-    b2 = 1;
-    std::time_t now = time(0);
-    
-    
-    
-    
-    
-    
-    //Start up SDL and create window
-    if( !init() )
-    {
-        printf( "Failed to initialize!\n" );
-    }
-    else
-    {
-        //Load media
-        if( !loadMedia() )
-        {
-            printf( "Failed to load media!\n" );
-        }
-        else
-        {
-            //Main loop flag
-            bool quit = false;
-            
-            //Event handler
-            SDL_Event e;
-            
-            //While application is running
-            while( !quit )
-            {
-                //Handle events on queue
-                while( SDL_PollEvent( &e ) != 0 )
-                {
-                    //User requests quit
-                    if( e.type == SDL_QUIT )
-                    {
-                        quit = true;
-                    }
-                }
-                
-                //Clear screen
-                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-                SDL_RenderClear( gRenderer );
-                
-                //Render background texture to screen
-                // bool col = collision(pos, pos2 );
-                
-                gBackgroundTexture.render( 0, 0);
-                move(velocity , now, pos );
-                move(velocity2 , now, pos2);
-                
-                
-                //Render Foo' to the screen
-                gFooTexture.render( pos[0], pos[1]);
-                farTexture.render( pos2[0], pos2[1]);
-                
-                
-                
-                //Update screen
-                SDL_RenderPresent( gRenderer );
-            }
-        }
-    }
-    
-    
-    //Free resources and close SDL
-    close();
-    
-    return 0;
-}
 
 
 /// >>>>>>>>>>>>>>>> TEST <<<<<<<<<<<<<<<<

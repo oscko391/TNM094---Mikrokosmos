@@ -147,8 +147,6 @@ void Card::changeLang()
 
 bool Card::loadTexture(SDL_Renderer* gRenderer)
 {
-
-
     //The final texture
     SDL_Texture* newTexture = NULL;
 
@@ -179,10 +177,11 @@ bool Card::loadTexture(SDL_Renderer* gRenderer)
     return cardTexture != NULL;
 }
 
-void Card::render( SDL_Renderer* gRenderer)
+void Card::render( SDL_Renderer* gRenderer) // Blir error atm
 {
     //Set rendering space and render to screen
-    SDL_Rect renderQuad = {pos.x , pos.y, width, height};
+
+    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
 
     SDL_RenderCopy( gRenderer, cardTexture, NULL, &renderQuad );
 }
