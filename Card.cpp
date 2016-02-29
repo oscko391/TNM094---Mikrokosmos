@@ -13,7 +13,7 @@ Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT,
     , isSwede(lang)
     , pos(inPos)
     , velocity(inVel)
-    ,imgPath(textPath)
+    , imgPath(textPath)
 {
 }
 
@@ -47,8 +47,6 @@ Card::~Card()
 {
   SDL_DestroyTexture(cardTexture);
   cardTexture = NULL;
-
-
 }
 /*----------------------------------------------------------*/
 
@@ -187,12 +185,6 @@ bool Card::loadTexture(SDL_Renderer* gRenderer)
         {
             printf( "Unable to create texture from %s! SDL Error: %s\n", imgPath.c_str(), SDL_GetError() );
         }
-        else
-        {
-            //Get image dimensions
-            width = loadedSurface->w;
-            height = loadedSurface->h;
-        }
 
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
@@ -206,6 +198,8 @@ bool Card::loadTexture(SDL_Renderer* gRenderer)
 void Card::render( SDL_Renderer* gRenderer) // Blir error atm
 {
     //Set rendering space and render to screen
+
     SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
+
     SDL_RenderCopy( gRenderer, cardTexture, NULL, &renderQuad );
 }
