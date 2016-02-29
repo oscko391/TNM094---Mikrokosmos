@@ -31,18 +31,13 @@ private:
     glm::vec2 velocity;
     std::string imgPath;
 
-    SDL_Surface* gPNGSurface = NULL;
-
-
-    SDL_Surface* loadSurface( std::string path );
-    SDL_Surface* gScreenSurface = NULL;
-
+    SDL_Texture* cardTexture = NULL;
 
 
 public:
     //constructors
     Card(); //default construtor
-    Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel);
+    Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath);
     ~Card();
     //Transformation functions
 //    void move(glm::vec2 velocity);
@@ -57,14 +52,11 @@ public:
     std::string getSvText();
     std::string getEnHeader();
     std::string getEnText();
-    std::string getImgPath();
+    std::string getImgPath();//png
 
     bool getIsSwede();
     glm::vec3 getPos();
     glm::vec2 getVelocity();
-    SDL_Surface* getPngSurface();
-    SDL_Surface* getScreenSurface();
-
 
 
     //setters
@@ -74,12 +66,11 @@ public:
     void addCategory( std::string inCat);
     void setPos(glm::vec3 inPos);
     void setVelocity(glm::vec2 inVel);
-    void setPngSurface(SDL_Surface* s);
     void setImgPath(std::string s);
-    void setgScreenSurface(SDL_Surface* surf);
 
-    bool loadMedia();
     void changeLang();
+    bool loadTexture(SDL_Renderer* gRenderer);
+    void render( SDL_Renderer* gRenderer);
 };
 
     //if eng ->set lang to swe

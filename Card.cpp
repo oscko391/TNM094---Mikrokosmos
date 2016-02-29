@@ -5,7 +5,7 @@ Card::Card()
 
 }
 
-Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel)
+Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath)
     : svHeader(inSvH)
     , svText(inSvT)
     , enHeader(inEnH)
@@ -13,6 +13,7 @@ Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT,
     , isSwede(lang)
     , pos(inPos)
     , velocity(inVel)
+    ,imgPath(textPath)
 {
 }
 
@@ -46,14 +47,10 @@ Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT,
 // Destructor
 Card::~Card()
 {
-    SDL_FreeSurface( gPNGSurface );
-	gPNGSurface = NULL;
-	SDL_FreeSurface( gScreenSurface);
-	gScreenSurface = NULL;
+  SDL_DestroyTexture(cardTexture);
+  cardTexture = NULL;
 
-	//Quit SDL subsystems
-	//IMG_Quit();
-	//SDL_Quit();
+
 }
 /*----------------------------------------------------------*/
 
@@ -119,15 +116,8 @@ glm::vec2 Card::getVelocity()
     return velocity;
 }
 
-SDL_Surface* Card::getPngSurface()
-{
-    return gPNGSurface;
-}
 
-SDL_Surface* Card::getScreenSurface()
-{
-    return gScreenSurface;
-}
+
 /*---------------------------SETTERS-----------------------------------------*/
 void Card::setHeight(int h)
 {
@@ -174,58 +164,52 @@ void Card::changeLang()
 }
 
 /*----------------------------------------------------------------------------*/
-bool Card::loadMedia()
+
+
+
+bool Card::loadTexture(SDL_Renderer* gRenderer)
 {
-    //Loading success flag
-    bool success = true;
-
-    //Load PNG surface
-    gPNGSurface = loadSurface( imgPath );
-    //setPngSurface(loadSurface(imgPath));
-    if( gPNGSurface == NULL )
-    {
-        printf( "Failed to load PNG image!\n" );
-        success = false;
-    }
-
-    return success;
-}
 
 
-
-SDL_Surface* Card::loadSurface( std::string path )
-{
-    //The final optimized image
-    SDL_Surface* optimizedSurface = NULL;
+    //The final texture
+    SDL_Texture* newTexture = NULL;
 
     //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    SDL_Surface* loadedSurface = IMG_Load(imgPath.c_str());
     if( loadedSurface == NULL )
     {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+        printf( "Unable to load image %s! SDL_image Error: %s\n", imgPath.c_str(), IMG_GetError() );
     }
     else
     {
-        //Convert surface to screen format
-        optimizedSurface = SDL_ConvertSurface( loadedSurface, getScreenSurface()->format, NULL );
-        if( optimizedSurface == NULL )
+        //Color key image
+        SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+
+        //Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+        if( newTexture == NULL )
         {
-            printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+            printf( "Unable to create texture from %s! SDL Error: %s\n", imgPath.c_str(), SDL_GetError() );
+        }
+        else
+        {
+            //Get image dimensions
+            width = loadedSurface->w;
+            height = loadedSurface->h;
         }
 
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
     }
 
-    return optimizedSurface;
+    //Return success
+    cardTexture = newTexture;
+    return cardTexture != NULL;
 }
 
-void Card::setPngSurface(SDL_Surface* s)
+void Card::render( SDL_Renderer* gRenderer)
 {
-    gPNGSurface = s;
-}
-
-void Card::setgScreenSurface(SDL_Surface* surf)
-{
-    gScreenSurface = surf;
+    //Set rendering space and render to screen
+    SDL_Rect renderQuad = {pos.x , pos.y, width, height };
+    SDL_RenderCopy( gRenderer, cardTexture, NULL, &renderQuad );
 }
