@@ -27,7 +27,7 @@ private:
 public:
     //constructors
     Card(); //default construtor
-    Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel);
+    Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath);
     ~Card();
     //Transformation functions
     void move(glm::vec2 velocity);

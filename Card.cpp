@@ -5,7 +5,7 @@ Card::Card()
 
 }
 
-Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel)
+Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath)
     : svHeader(inSvH)
     , svText(inSvT)
     , enHeader(inEnH)
@@ -13,6 +13,7 @@ Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT,
     , isSwede(lang)
     , pos(inPos)
     , velocity(inVel)
+    ,imgPath(textPath)
 {
 }
 
