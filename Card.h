@@ -41,7 +41,7 @@ public:
     ~Card();
     //Transformation functions
 //    void move(glm::vec2 velocity);
-    void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position);
+    void move( std::time_t now );
     
     //getters
     int getHeight();
