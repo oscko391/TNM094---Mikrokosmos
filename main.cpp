@@ -7,12 +7,9 @@
 //
 
 
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string>
-
 
 
 #include "rapidxml.hpp" // mac: add to project, windows: add headers to lib and refrence with < >
@@ -22,19 +19,21 @@ bool readXml(std::string filePath, std::vector<Card> &vecCard);
 bool initWindow();
 void close();
 
-std::string mCurrentSprite;
 
 // global window and renderer to the window
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 //const int SCREEN_WIDTH = 1200;
 //const int SCREEN_HEIGHT = 800;
-std::vector<Card> theCards;
+
+
 
 int main(int argc, char*args[])
 {
+    std::vector<Card> theCards;
+    
     // initiation of the cards, read the xml-file and save cards to theCards
-    std::string xmlPath = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/mediaTest.xml"; // change to correct path
+    std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/mediaTest.xml"; // change to correct path
     
     readXml(xmlPath, theCards);
     time_t theNow = time(0);
@@ -50,9 +49,8 @@ int main(int argc, char*args[])
         
         bool quit = false;
         SDL_Event e;
-        
+
         while (!quit) {
-            
             //Handle events on queue
             while( SDL_PollEvent( &e ) != 0 )
             {
@@ -61,8 +59,9 @@ int main(int argc, char*args[])
                 {
                     quit = true;
                 }
+                
                 //Handle button events
-                for(int i = theCards.size(); i > 0; i-- )
+                for(int i = theCards.size(); i >= 0; i-- )
                 {
                     if (theCards[i].handleEvent( &e ))
                     {
@@ -71,32 +70,42 @@ int main(int argc, char*args[])
                     
                 }
 
+                
             }
+
+
+            // begin render
             //Clear screen
-            SDL_SetRenderDrawColor( gRenderer,0x33, 0x00, 0x56, 0xFF);
+            SDL_SetRenderDrawColor( gRenderer, 0x33, 0x00, 0x85, 0xFF);
             SDL_RenderClear( gRenderer );
             
-            // render shit
-            for(int i = 0; i < theCards.size(); i++) {
-                theCards[i].move(theNow);
-                theCards[i].render(gRenderer);
+            std::vector<int> activeCards;
+            // render normal Cards
+            for (int i = 0; i < theCards.size(); i++) {
+                if (theCards[i].getLifeTime() > time(0)) {
+                    activeCards.push_back(i);
+                }
+                else {
+                    theCards[i].move(theNow);
+                    theCards[i].render(gRenderer);
+                }
             }
+            
+            // render active Cards
+            for (int i = 0; i < activeCards.size(); i++) {
+                theCards[activeCards[i]].renderActive(gRenderer);
+            }
+            
             //Update screen
             SDL_RenderPresent( gRenderer );
+            // end of render
         }
     }
 
     close();
+    
     return 0;
 }
-
-
-// ------> TEST
-
-
-
-
-// <------ TEST
 
 bool readXml(std::string filePath, std::vector<Card> &vecCard) {
     // getting the string through an ifstream
@@ -235,7 +244,7 @@ bool initWindow()
             else
             {
                 //Initialize renderer color
-                SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0xFF, 0xFF);
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
                 
                 //Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
@@ -267,4 +276,3 @@ void close()
     IMG_Quit();
     SDL_Quit();
 }
-

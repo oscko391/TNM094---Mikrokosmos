@@ -1,4 +1,4 @@
-#include "glm.hpp"
+#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
 #include <vector>
 #include <string>
 #include <stdio.h>
@@ -12,15 +12,15 @@
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1200; // Flyttas till main sen? 
-const int SCREEN_HEIGHT = 400;
+const int SCREEN_HEIGHT = 700;
 
 
 class Card
 {
 private:
     int height = 100;
-    int width= 170;
-    double lifeTime = 30.0;
+    int width= 200;
+    double lifeTime = -1;
     std::vector<std::string> categories;
     std::string svHeader;
     std::string svText;
@@ -42,7 +42,6 @@ public:
     //Transformation functions
     void move( std::time_t now );
     bool handleEvent( SDL_Event* e );
-    
     
     //getters
     int getHeight();
@@ -72,6 +71,7 @@ public:
     void changeLang();
     bool loadTexture(SDL_Renderer* gRenderer);
     void render( SDL_Renderer* gRenderer);
+    void renderActive( SDL_Renderer* gRenderer);
 };
 
     //if eng ->set lang to swe

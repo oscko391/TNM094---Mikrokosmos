@@ -80,7 +80,7 @@ bool Card::handleEvent( SDL_Event* e )
         //Mouse is outside button
         if( !inside )
         {
-           // currentEvent = "BUTTON_SPRITE_MOUSE_OUT";
+            // currentEvent = "BUTTON_SPRITE_MOUSE_OUT";
             //std::cout << currentEvent << std::endl;
             
         }
@@ -91,14 +91,15 @@ bool Card::handleEvent( SDL_Event* e )
             switch( e->type )
             {
                 case SDL_MOUSEMOTION:
-                   // currentEvent = "BUTTON_SPRITE_MOUSE_OVER_MOTION";
-                   // std::cout << currentEvent << std::endl;
+                    // currentEvent = "BUTTON_SPRITE_MOUSE_OVER_MOTION";
+                    // std::cout << currentEvent << std::endl;
                     
                     break;
                     
                 case SDL_MOUSEBUTTONDOWN:
                     currentEvent = "BUTTON_SPRITE_MOUSE_DOWN";
                     std::cout << currentEvent << std::endl;
+                    setLifeTime(time(0) + 10);
                     return true;
                     
                     break;
@@ -275,5 +276,14 @@ void Card::render( SDL_Renderer* gRenderer) // Blir error atm
 
     SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
 
+    SDL_RenderCopy( gRenderer, cardTexture, NULL, &renderQuad );
+}
+
+void Card::renderActive( SDL_Renderer* gRenderer) // Blir error atm
+{
+    //Set rendering space and render to screen
+    
+    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), static_cast<int>(floor(width*1.5f)), static_cast<int>(floor(height*1.5f)) };
+    
     SDL_RenderCopy( gRenderer, cardTexture, NULL, &renderQuad );
 }
