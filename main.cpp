@@ -7,9 +7,12 @@
 //
 
 
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
+
 
 
 #include "rapidxml.hpp" // mac: add to project, windows: add headers to lib and refrence with < >
@@ -19,6 +22,7 @@ bool readXml(std::string filePath, std::vector<Card> &vecCard);
 bool initWindow();
 void close();
 
+std::string mCurrentSprite;
 
 // global window and renderer to the window
 SDL_Window* gWindow = NULL;
@@ -30,7 +34,7 @@ std::vector<Card> theCards;
 int main(int argc, char*args[])
 {
     // initiation of the cards, read the xml-file and save cards to theCards
-    std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/mediaTest.xml"; // change to correct path
+    std::string xmlPath = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/mediaTest.xml"; // change to correct path
     
     readXml(xmlPath, theCards);
     time_t theNow = time(0);
@@ -57,13 +61,23 @@ int main(int argc, char*args[])
                 {
                     quit = true;
                 }
+                //Handle button events
+                for(int i = theCards.size(); i > 0; i-- )
+                {
+                    if (theCards[i].handleEvent( &e ))
+                    {
+                        break;
+                    }
+                    
+                }
+
             }
             //Clear screen
-            SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0xFF, 0xFF);
+            SDL_SetRenderDrawColor( gRenderer,0x33, 0x00, 0x56, 0xFF);
             SDL_RenderClear( gRenderer );
             
             // render shit
-            for (int i = 0; i < theCards.size(); i++) {
+            for(int i = 0; i < theCards.size(); i++) {
                 theCards[i].move(theNow);
                 theCards[i].render(gRenderer);
             }
@@ -75,6 +89,14 @@ int main(int argc, char*args[])
     close();
     return 0;
 }
+
+
+// ------> TEST
+
+
+
+
+// <------ TEST
 
 bool readXml(std::string filePath, std::vector<Card> &vecCard) {
     // getting the string through an ifstream
@@ -213,7 +235,7 @@ bool initWindow()
             else
             {
                 //Initialize renderer color
-                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+                SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0xFF, 0xFF);
                 
                 //Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
@@ -245,3 +267,4 @@ void close()
     IMG_Quit();
     SDL_Quit();
 }
+

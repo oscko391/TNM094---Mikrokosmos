@@ -40,6 +40,82 @@ void Card::move( std::time_t now ){
     }
 }
 
+
+bool Card::handleEvent( SDL_Event* e )
+{
+    std::string currentEvent;
+    //If mouse event happened
+    if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
+    {
+        //Get mouse position
+        int x, y;
+        SDL_GetMouseState( &x, &y );
+        
+        //Check if mouse is in button
+        bool inside = true;
+        
+        
+        //Mouse is left of the button
+        if( x < pos[0] )
+        {
+            inside = false;
+        }
+        //Mouse is right of the button
+        else if( x > (pos[0] + width))
+        {
+            inside = false;
+        }
+        //Mouse above the button
+        else if( y < pos[1] )
+        {
+            inside = false;
+        }
+        //Mouse below the button
+        else if( y > (pos[1]+ height))
+        {
+            inside = false;
+        }
+        // _______
+        
+        //Mouse is outside button
+        if( !inside )
+        {
+           // currentEvent = "BUTTON_SPRITE_MOUSE_OUT";
+            //std::cout << currentEvent << std::endl;
+            
+        }
+        //Mouse is inside button
+        else
+        {
+            //Set mouse over sprite
+            switch( e->type )
+            {
+                case SDL_MOUSEMOTION:
+                   // currentEvent = "BUTTON_SPRITE_MOUSE_OVER_MOTION";
+                   // std::cout << currentEvent << std::endl;
+                    
+                    break;
+                    
+                case SDL_MOUSEBUTTONDOWN:
+                    currentEvent = "BUTTON_SPRITE_MOUSE_DOWN";
+                    std::cout << currentEvent << std::endl;
+                    return true;
+                    
+                    break;
+                    
+                case SDL_MOUSEBUTTONUP:
+                    //currentEvent = "BUTTON_SPRITE_MOUSE_UP";
+                    //std::cout <<  currentEvent << std::endl;
+                    
+                    break;
+            }
+        }
+    }
+    return false;
+}
+
+
+
 // Destructor
 Card::~Card()
 {

@@ -12,14 +12,14 @@
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1200; // Flyttas till main sen? 
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_HEIGHT = 400;
 
 
 class Card
 {
 private:
-    int height = 200;
-    int width= 120;
+    int height = 100;
+    int width= 170;
     double lifeTime = 30.0;
     std::vector<std::string> categories;
     std::string svHeader;
@@ -40,8 +40,9 @@ public:
     Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath);
     ~Card();
     //Transformation functions
-//    void move(glm::vec2 velocity);
     void move( std::time_t now );
+    bool handleEvent( SDL_Event* e );
+    
     
     //getters
     int getHeight();
