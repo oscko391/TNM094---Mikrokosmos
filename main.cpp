@@ -30,7 +30,7 @@ std::vector<Card> theCards;
 int main(int argc, char*args[])
 {
     // initiation of the cards, read the xml-file and save cards to theCards
-    std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/SDL_tutorial/mediaTest.xml"; // change to correct path
+    std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/mediaTest.xml"; // change to correct path
     
     readXml(xmlPath, theCards);
     time_t theNow = time(0);
