@@ -256,7 +256,7 @@ bool loadMedia()
 }
 
 
-/*void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position)
+void move( glm::vec2 &vel,  std::time_t now ,glm::vec3 &position)
 {
     std::time_t after = time(0);
     
@@ -277,7 +277,7 @@ bool loadMedia()
         vel[1]  = (vel[1]  * (- 1));
     }
     
-}*/
+}
 
 void close()
 {
@@ -346,8 +346,8 @@ int main( int argc, char* args[] ) // -------------------------------main-------
                 SDL_RenderClear( gRenderer );
                 
                 gBackgroundTexture.render( 0, 0); // Render background to screen
-                //move(velocity , now, pos ); //make
-                //move(velocity2 , now, pos2);
+                move(velocity , now, pos ); //make
+                move(velocity2 , now, pos2);
                 
                 gFooTexture.render( pos[0], pos[1]); //Render to the screen
                 farTexture.render( pos2[0], pos2[1]);
