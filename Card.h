@@ -1,4 +1,5 @@
-#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
+//#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
+#include "glm.hpp"
 #include <vector>
 #include <string>
 #include <stdio.h>
