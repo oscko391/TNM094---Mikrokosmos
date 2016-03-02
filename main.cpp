@@ -12,7 +12,7 @@
 #include <sstream>
 
 
-#include "rapidxml.hpp"
+#include "rapidxml.hpp" // mac: add to project, windows: add headers to lib and refrence with < >
 #include "Card.h"
 
 bool readXml(std::string filePath, std::vector<Card> &vecCard);
@@ -30,7 +30,7 @@ std::vector<Card> theCards;
 int main(int argc, char*args[])
 {
     // initiation of the cards, read the xml-file and save cards to theCards
-    std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/SDL_tutorial/mediaTest.xml";
+    std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/SDL_tutorial/mediaTest.xml"; // change to correct path
     
     readXml(xmlPath, theCards);
     time_t theNow = time(0);
