@@ -1,18 +1,24 @@
 //#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
-#include "glm.hpp"
+#if defined (__APPLE_CC__) //if apple dator
+   #include <SDL2/SDL.h>
+   #include "glm.hpp"
+   #include <SDL2/SDL_image.h>
+#else //annars windows version
+    #include <SDL.h>
+    #include <SDL_image.h>
+    #include <glm/glm.hpp>
+#endif
+
 #include <vector>
 #include <string>
 #include <stdio.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2/SDL.h>
 #include <string>
-
 #include <cmath>
 #include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 #include <iostream>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1200; // Flyttas till main sen? 
+const int SCREEN_WIDTH = 1200; // Flyttas till main sen?
 const int SCREEN_HEIGHT = 700;
 
 
@@ -28,8 +34,10 @@ private:
     std::string enHeader;
     std::string enText;
     bool isSwede = true; // limiting us to 2 languages
+    bool isTrans = false;
     glm::vec3 pos;
     glm::vec2 velocity;
+    glm::vec2 touchPos = glm::vec2(-1.0f,-1.0f);
     std::string imgPath;
 
     SDL_Texture* cardTexture = NULL;
@@ -41,9 +49,9 @@ public:
     Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath);
     ~Card();
     //Transformation functions
-    void move( std::time_t now );
+    void move( time_t now );
     bool handleEvent( SDL_Event* e );
-    
+
     //getters
     int getHeight();
     int getWidth();
