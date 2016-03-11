@@ -18,15 +18,15 @@
 #include <iostream>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1200; // Flyttas till main sen?
-const int SCREEN_HEIGHT = 700;
+const int SCREEN_WIDTH = 700; // 1200 //Flyttas till main sen?
+const int SCREEN_HEIGHT = 300; // 700
 
 
 class Card
 {
 private:
     int height = 100;
-    int width= 200;
+    int width= 150;
     double lifeTime = -1;
     std::vector<std::string> categories;
     std::string svHeader;
@@ -36,11 +36,13 @@ private:
     bool isSwede = true; // limiting us to 2 languages
     bool isTrans = false;
     glm::vec3 pos;
+    double angle = 0.0;
     glm::vec2 velocity;
     glm::vec2 touchPos = glm::vec2(-1.0f,-1.0f);
     std::string imgPath;
 
     SDL_Texture* cardTexture = NULL;
+
 
 
 public:
@@ -81,6 +83,10 @@ public:
     bool loadTexture(SDL_Renderer* gRenderer);
     void render( SDL_Renderer* gRenderer);
     void renderActive( SDL_Renderer* gRenderer);
-};
 
-    //if eng ->set lang to swe
+     //touch funcs
+    void scale(SDL_Event* e);
+    //checks if finger coordinated are within the borders of the card
+    bool isInside(int x, int y);
+
+};
