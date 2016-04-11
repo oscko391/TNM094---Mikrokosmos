@@ -42,6 +42,8 @@ void Card::move( time_t now )
 
     if (std::abs(velocity.x > 2))
         velocity*=0.5;
+    if (std::abs(velocity.y > 2))
+        velocity*=0.5;
 }
 
 void Card::scale(SDL_Event* e)
@@ -57,6 +59,8 @@ void Card::scale(SDL_Event* e)
 
 bool Card::handleEvent( SDL_Event* e )
 {
+
+    bool isEvent = false;
     /*-----------------------------MOUSE_EVENT-------------------------------------------*/
 
     if( (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP))
@@ -68,11 +72,11 @@ bool Card::handleEvent( SDL_Event* e )
 
         if (isInside(x, y))
         {
-
             //Set mouse over sprite
             switch( e->type )
             {
             case SDL_MOUSEMOTION:
+
 
                 if (isTrans)
                 {
@@ -84,6 +88,7 @@ bool Card::handleEvent( SDL_Event* e )
                 break;
 
             case SDL_MOUSEBUTTONDOWN:
+                isEvent = true;
 
                 setLifeTime(time(0) + 10);
 
@@ -129,7 +134,6 @@ bool Card::handleEvent( SDL_Event* e )
                         touchPos.x = x - pos.x;
                         touchPos.y = y - pos.y;
                         isTrans = true;
-                        std::cout << "IF" << std::endl;
 
 
                     break;
@@ -179,7 +183,7 @@ bool Card::handleEvent( SDL_Event* e )
         }
     }
 
-    return false;
+    return isEvent;
 }
 
 
@@ -358,27 +362,28 @@ bool Card::isInside(int x, int y)
 {
     bool inside = true;
 
-    //Mouse is left of the button
+    //finger is left of the card
     if( x < pos[0] )
     {
         inside = false;
     }
-    //Mouse is right of the button
+    //finger is right of the card
     else if( x > (pos[0] + width))
     {
         inside = false;
     }
-    //Mouse above the button
+    //finger above the card
     else if( y < pos[1] )
     {
         inside = false;
     }
-    //Mouse below the button
+    //finger below the card
     else if( y > (pos[1]+ height))
     {
         inside = false;
     }
 
+    //if none of the above criteria is true, finger must be inside the card
     return inside;
 
 }

@@ -54,6 +54,7 @@ public:
     void move( time_t now );
     bool handleEvent( SDL_Event* e );
 
+
     //getters
     int getHeight();
     int getWidth();
