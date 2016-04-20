@@ -48,6 +48,18 @@ void Card::move( time_t now )
 
 void Card::scale(SDL_Event* e)
 {
+  /*  SDL_Finger* finger1 = SDL_GetTouchFinger(e->mgesture.touchId, 0);
+    SDL_Finger* finger2 = SDL_GetTouchFinger(e->mgesture.touchId, 1);
+
+    double hypot = sqrt(pow(finger1->x*SCREEN_WIDTH - finger2->x*SCREEN_WIDTH,2)
+                        +pow(finger1->y*SCREEN_HEIGHT - finger2->y*SCREEN_HEIGHT,2));
+
+    double scaleFactor = (hypot + e->mgesture.dDist*SCREEN_WIDTH)/hypot;
+
+    width *= scaleFactor;
+    height *= scaleFactor;
+
+   */
     SDL_Finger* finger = SDL_GetTouchFinger(e->mgesture.touchId, 0);
 
     double scaleFactor = (sqrt(pow(finger->x - e->mgesture.x,2) + pow(finger->y - e->mgesture.y, 2))+e->mgesture.dDist)
@@ -72,18 +84,24 @@ bool Card::handleEvent( SDL_Event* e )
 
         if (isInside(x, y))
         {
+            //calculate new position for card
+            float newPosx = x - touchPos.x;
+            float newPosy = y - touchPos.y;
+
             //Set mouse over sprite
             switch( e->type )
             {
             case SDL_MOUSEMOTION:
 
 
-                if (isTrans)
+                if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
+                        newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
                 {
-                    pos.x = x - touchPos.x;
-                    pos.y = y - touchPos.y;
+                    pos.x = newPosx;
+                    pos.y = newPosy;
                     setLifeTime(time(0) + 10); //add time before death
                 }
+
 
                 break;
 
@@ -101,7 +119,8 @@ bool Card::handleEvent( SDL_Event* e )
                 }
 
 
-                //return true;
+
+
 
                 break;
 
@@ -117,14 +136,17 @@ bool Card::handleEvent( SDL_Event* e )
 
     /*---------------------------------TOUCH_EVENT------------------------------------------*/
     // if target is touched, activate it
-    /*
+
         if (e->type == SDL_FINGERMOTION || e->type == SDL_FINGERDOWN|| e->type == SDL_FINGERUP)
         {
             int x = e->tfinger.x * SCREEN_WIDTH;
             int y = e->tfinger.y * SCREEN_HEIGHT;
 
-            if (isInside(x, y)
+            if (isInside(x, y))
             {
+                float newPosx = pos.x+e->tfinger.dx*SCREEN_WIDTH;
+                float newPosy = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
+
                 switch( e->type )
                 {
 
@@ -134,19 +156,18 @@ bool Card::handleEvent( SDL_Event* e )
                         touchPos.x = x - pos.x;
                         touchPos.y = y - pos.y;
                         isTrans = true;
+                        isEvent = true;
 
 
                     break;
                 case SDL_FINGERMOTION:
 
-                    if (isTrans)
+                    if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
+                        newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
                     {
-                        std::cout << pos.x << std::endl;
-                        pos.x = pos.x+e->tfinger.dx;
-                        pos.y = pos.y+e->tfinger.dy;
+                        pos.x = pos.x+e->tfinger.dx*SCREEN_WIDTH;
+                        pos.y = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
                         setLifeTime(time(0) + 10); //add time before death
-                        std::cout << "efter:" << pos.x << std::endl;
-
                     }
 
                     break;
@@ -158,30 +179,40 @@ bool Card::handleEvent( SDL_Event* e )
                     break;
                 }
             }
-        }*/
+        }
 
     /*--------------------------------------------MULTI_TOUCH-------------------------------------------*/
 
     if ( e->type == SDL_MULTIGESTURE)
     {
-        int x = e->mgesture.x * SCREEN_WIDTH;
-        int y = e->mgesture.y * SCREEN_HEIGHT;
+        SDL_Finger* finger1 = SDL_GetTouchFinger(e->mgesture.touchId, 0);
+        SDL_Finger* finger2 = SDL_GetTouchFinger(e->mgesture.touchId, 1);
 
-        if (isInside(x ,y))
+
+        int x1 = finger1->x * SCREEN_WIDTH;
+        int y1 = finger1->y * SCREEN_HEIGHT;
+
+        int x2 = finger2->x * SCREEN_WIDTH;
+        int y2 = finger2->y * SCREEN_HEIGHT;
+
+        if (isInside(x1 ,y1) && isInside(x2,y2))
         {
             // scaling if fingers are pinching
             if (fabs( e->mgesture.dDist ) > 0.0002)
             {
                 scale(e);
+                isEvent = true;
 
             }
             if (fabs( e->mgesture.dTheta ) > 3.14 / 1080.0 )
             {
                 angle += e->mgesture.dTheta * 180/3.14;
-
+                isEvent = true;
             }
         }
     }
+
+
 
     return isEvent;
 }
@@ -216,6 +247,12 @@ std::vector<std::string> Card::getCategories()
 {
     return categories;
 }
+
+SDL_Texture* Card::getCardTexture()
+{
+    return cardTexture;
+}
+
 
 std::string Card::getSvHeader()
 {
@@ -338,6 +375,7 @@ bool Card::loadTexture(SDL_Renderer* gRenderer)
 
     //Return success
     cardTexture = newTexture;
+
     return cardTexture != NULL;
 }
 
@@ -345,7 +383,7 @@ void Card::render( SDL_Renderer* gRenderer) // Blir error atm
 {
     //Set rendering space and render to screen
 
-    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
+    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), int(width), int(height) };
 
     SDL_RenderCopyEx( gRenderer, cardTexture, NULL, &renderQuad, angle, NULL, SDL_FLIP_NONE );
 }

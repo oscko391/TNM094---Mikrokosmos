@@ -1,3 +1,6 @@
+#ifndef CARD_H
+#define CARD_H
+
 //#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
 #if defined (__APPLE_CC__) //if apple dator
    #include <SDL2/SDL.h>
@@ -65,6 +68,7 @@ public:
     std::string getEnHeader();
     std::string getEnText();
     std::string getImgPath();//png
+    SDL_Texture* getCardTexture();
 
     bool getIsSwede();
     glm::vec3 getPos();
@@ -91,3 +95,4 @@ public:
     bool isInside(int x, int y);
 
 };
+#endif // CARD_H
