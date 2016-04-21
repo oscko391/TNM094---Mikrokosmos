@@ -1,3 +1,6 @@
+#ifndef CARD_H
+#define CARD_H
+
 //#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
 #if defined (__APPLE_CC__) //if apple dator
    #include <SDL2/SDL.h>
@@ -25,8 +28,8 @@ const int SCREEN_HEIGHT = 300; // 700
 class Card
 {
 private:
-    int height = 100;
-    int width= 150;
+    double height = 100;
+    double width= 150;
     double lifeTime = -1;
     std::vector<std::string> categories;
     std::string svHeader;
@@ -54,9 +57,10 @@ public:
     void move( time_t now );
     bool handleEvent( SDL_Event* e );
 
+
     //getters
-    int getHeight();
-    int getWidth();
+    double getHeight();
+    double getWidth();
     double getLifeTime();
     std::vector<std::string> getCategories();
     std::string getSvHeader();
@@ -64,6 +68,7 @@ public:
     std::string getEnHeader();
     std::string getEnText();
     std::string getImgPath();//png
+    SDL_Texture* getCardTexture();
 
     bool getIsSwede();
     glm::vec3 getPos();
@@ -90,3 +95,4 @@ public:
     bool isInside(int x, int y);
 
 };
+#endif // CARD_H
