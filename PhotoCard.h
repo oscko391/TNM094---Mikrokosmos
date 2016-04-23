@@ -20,8 +20,9 @@ class PhotoCard : public Card
 {
 private:
     int texIndex;
-    std::string imgPath;
+    
     static std::vector<SDL_Texture*> theTextures;
+    static int tex_generator;
     
     SDL_Texture* loadingTex(SDL_Renderer *r, std::string path);
     
@@ -32,7 +33,6 @@ public:
     
     int getTexIndex() const;
     
-    //void setImgPath(std::string s);
     void setTexIndex(int i);
     
     void render( SDL_Renderer* gRenderer);

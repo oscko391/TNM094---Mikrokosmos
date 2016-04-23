@@ -20,9 +20,9 @@ const int SCREEN_HEIGHT = 700;
 class Card
 {
 private:
-    int height = 100;
+    int height = 120;
     int width= 200;
-    clock_t lifeTime = -1;
+    clock_t lifeTime;
     std::vector<std::string> categories;
     std::string svHeader;
     std::string svText;
@@ -32,6 +32,12 @@ private:
     glm::vec3 pos;
     glm::vec2 velocity;
     std::string path;
+    
+    bool isTrans;
+    double angle = 0.0;
+    glm::vec2 touchPos = glm::vec2(-1.0f,-1.0f);
+    
+    bool isReading;
 
     //SDL_Texture* cardTexture = NULL;
     
@@ -43,7 +49,7 @@ public:
     Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath);
     ~Card();
     //Transformation functions
-    void move();
+    void move(float timeStep);
     bool handleEvent( SDL_Event* e );
     
     //getters
@@ -55,7 +61,8 @@ public:
     std::string getSvText();
     std::string getEnHeader();
     std::string getEnText();
-    std::string getPath() const; 
+    std::string getPath() const;
+    bool getReading();
 
     //bool getIsSwede();
     glm::vec3 getPos();
@@ -75,6 +82,12 @@ public:
     //bool loadTexture(SDL_Renderer* gRenderer);
     virtual void render( SDL_Renderer* gRenderer);
     //void render( SDL_Renderer* gRenderer, SDL_Texture* texture); // for images
+    
+    
+    //touch funcs
+    void scale(SDL_Event* e);
+    //checks if finger coordinated are within the borders of the card
+    bool isInside(int x, int y);
 };
 
     //if eng ->set lang to swe

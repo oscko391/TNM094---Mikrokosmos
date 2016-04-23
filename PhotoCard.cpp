@@ -15,10 +15,20 @@ PhotoCard::PhotoCard()
 }
 
 PhotoCard::PhotoCard(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath, SDL_Renderer* r)
+    : Card(inCat, inSvH, inSvT, inEnH, inEnT, inPos, inVel, textPath)
 {
-    Card(inCat, inSvH, inSvT, inEnH, inEnT, inPos, inVel, textPath);
-    //texIndex = theTextures.size();
-    //theTextures.push_back(loadingTex(r, textPath));
+    texIndex = tex_generator++;
+    theTextures.push_back(loadingTex(r, textPath));
+    int w, h;
+    SDL_QueryTexture(theTextures[texIndex], NULL, NULL, &w, &h);
+    double f = 170.0 / w;
+    setWidth(f * w);
+    setHeight(f * h);
+}
+
+PhotoCard::~PhotoCard()
+{
+    //Card::~Card();
 }
 
 
@@ -37,9 +47,24 @@ void PhotoCard::render( SDL_Renderer* gRenderer) // Blir error atm
     //Set rendering space and render to screen
     
     SDL_Rect renderQuad = {static_cast<int>(getPos().x) , static_cast<int>(getPos().y), getWidth(), getHeight() };
-    SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );
-    SDL_RenderFillRect( gRenderer, &renderQuad );
-    //SDL_RenderCopy( gRenderer, theTextures[texIndex], NULL, &renderQuad );
+    SDL_Rect whiteQuad = {static_cast<int>(getPos().x) - 5, static_cast<int>(getPos().y) - 5, getWidth() + 10, getHeight() + 10 };
+    SDL_Rect blackQuad = {static_cast<int>(getPos().x) - 10, static_cast<int>(getPos().y) - 10, getWidth() + 20, getHeight() + 20 };
+    SDL_Rect headQuad = {static_cast<int>(getPos().x) + getWidth()/60 , static_cast<int>(getPos().y) + getWidth()/60  , getWidth() - getWidth()/30  , getWidth() / 10};
+
+    if (getReading()) {
+        headQuad = {static_cast<int>(getPos().x) + getWidth()/60 , static_cast<int>(getPos().y) + getWidth()/60 , getWidth() - getWidth()/30 , getHeight() - getWidth()/30};
+    }
+    
+    SDL_SetRenderDrawColor( gRenderer, 0x10, 0x20, 0x50, 0x35 );
+    SDL_RenderFillRect( gRenderer, &blackQuad );
+    
+    SDL_SetRenderDrawColor( gRenderer, 0xEE, 0xEE, 0xEE, 0xFF );
+    SDL_RenderFillRect( gRenderer, &whiteQuad );
+    
+    SDL_RenderCopy( gRenderer, theTextures[texIndex], NULL, &renderQuad );
+    
+    SDL_SetRenderDrawColor( gRenderer, 0xDD, 0xDD, 0xDD, 0xCC );
+    SDL_RenderFillRect( gRenderer, &headQuad );
 }
 
 SDL_Texture* PhotoCard::loadingTex(SDL_Renderer* r, std::string path)

@@ -14,111 +14,213 @@ Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT,
     , velocity(inVel)
     , lifeTime(clock())
     , path(textPath)
+    , isReading(false)
+    , isTrans(false)
 {
     //lifeTime = clock();
 }
 
 
 /*-----------------Transformation functions-----------------*/
-void Card::move(){
-    
-    pos[0] += 0.2*velocity[0]; // ((velocity[0] *curve)/10) ;
-    pos[1] += 0.2*velocity[1]; // (velocity[1] * curve2);
-    
-    if(pos[0] > (SCREEN_WIDTH-SCREEN_WIDTH/6))
-    {
-        velocity[0] -= 0.05;
+void Card::move(float timeStep){
+    if (!isReading) {
+        pos[0] += velocity[0]*timeStep; // ((velocity[0] *curve)/10) ;
+        pos[1] += velocity[1]*timeStep; // (velocity[1] * curve2);
+        
+        if(pos[0] > (SCREEN_WIDTH-SCREEN_WIDTH/6))
+        {
+            velocity[0] -= 5;
+        }
+        else if (pos[0] < SCREEN_WIDTH/6-getWidth() )
+        {
+            velocity[0] += 5;
+        }
+        
+        if(pos[1] > (SCREEN_HEIGHT-SCREEN_HEIGHT/6) - 60 )
+        {
+            velocity[1] -= 5;
+        }
+        else if (pos[1] < SCREEN_HEIGHT/6-getHeight())
+        {
+            velocity[1] += 5;
+        }
     }
-    else if (pos[0] < SCREEN_WIDTH/6-width )
-    {
-        velocity[0] += 0.05;
-    }
-    
-    if(pos[1] > (SCREEN_HEIGHT-SCREEN_HEIGHT/6) )
-    {
-        velocity[1] -= 0.05;
-    }
-    else if (pos[1] < SCREEN_HEIGHT/6-height)
-    {
-        velocity[1] += 0.05;
-    }
+}
 
+//touch funcs
+void Card::scale(SDL_Event* e){
+    SDL_Finger* finger = SDL_GetTouchFinger(e->mgesture.touchId, 0);
+    
+    double scaleFactor = (sqrt(pow(finger->x - e->mgesture.x,2) + pow(finger->y - e->mgesture.y, 2))+e->mgesture.dDist)
+    /sqrt(pow(finger->x - e->mgesture.x,2) + pow(finger->y - e->mgesture.y, 2));
+    
+    width *= scaleFactor;
+    height *= scaleFactor;
+}
+//checks if finger coordinated are within the borders of the card
+bool Card::isInside(int x, int y){
+    bool inside = true;
+    
+    //finger is left of the card
+    if( x < pos[0] )
+    {
+        inside = false;
+    }
+    //finger is right of the card
+    else if( x > (pos[0] + width))
+    {
+        inside = false;
+    }
+    //finger above the card
+    else if( y < pos[1] )
+    {
+        inside = false;
+    }
+    //finger below the card
+    else if( y > (pos[1]+ height))
+    {
+        inside = false;
+    }
+    
+    //if none of the above criteria is true, finger must be inside the card
+    return inside;
 }
 
 
 bool Card::handleEvent( SDL_Event* e )
 {
-    std::string currentEvent;
-    //If mouse event happened
-    if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
+    bool isEvent = false;
+    /*-----------------------------MOUSE_EVENT-------------------------------------------*/
+    
+    if( (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEWHEEL))
     {
         //Get mouse position
         int x, y;
         SDL_GetMouseState( &x, &y );
         
-        //Check if mouse is in button
-        bool inside = true;
         
-        
-        //Mouse is left of the button
-        if( x < pos[0] )
+        if (isInside(x, y))
         {
-            inside = false;
-        }
-        //Mouse is right of the button
-        else if( x > (pos[0] + width))
-        {
-            inside = false;
-        }
-        //Mouse above the button
-        else if( y < pos[1] )
-        {
-            inside = false;
-        }
-        //Mouse below the button
-        else if( y > (pos[1]+ height))
-        {
-            inside = false;
-        }
-        // _______
-        
-        //Mouse is outside button
-        if( !inside )
-        {
-            // currentEvent = "BUTTON_SPRITE_MOUSE_OUT";
-            //std::cout << currentEvent << std::endl;
+            //calculate new position for card
+            //float newPosx = x - touchPos.x;
+            //float newPosy = y - touchPos.y;
             
-        }
-        //Mouse is inside button
-        else
-        {
+            
             //Set mouse over sprite
             switch( e->type )
             {
                 case SDL_MOUSEMOTION:
-                    // currentEvent = "BUTTON_SPRITE_MOUSE_OVER_MOTION";
-                    // std::cout << currentEvent << std::endl;
                     
+                    
+                    /*if (isTrans  && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
+                        newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
+                    {
+                        pos.x = newPosx;
+                        pos.y = newPosy;
+                        setLifeTime(clock() + CLOCKS_PER_SEC/2); //add time before death
+                        
+                    }
+                    */
                     break;
                     
                 case SDL_MOUSEBUTTONDOWN:
-                    currentEvent = "BUTTON_SPRITE_MOUSE_DOWN";
-                    std::cout << currentEvent << std::endl;
-                    //setLifeTime(time(0) + 10);
+                    isEvent = true;
+                    
                     setLifeTime(clock() + CLOCKS_PER_SEC/2);
-                    return true;
+                    touchPos.x = x - pos.x;
+                    touchPos.y = y - pos.y;
+                    isTrans = true;
+                    
+                    /*if (touchPos.x == -1.0f)
+                    {
+                        touchPos.x = x - pos.x;
+                        touchPos.y = y - pos.y;
+                        isTrans = true;
+                    }*/
+                    // {static_cast<int>(getPos().x) + 3 , static_cast<int>(getPos().y) + 3 , getWidth() - 6 , getWidth() / 10}
+                    if ((x > getPos().x + 3) && (x < getPos().x + getWidth() - 6 ) && (y > getPos().y + 3) && (y < getPos().y + getWidth() / 10 ) ) {
+                        isReading = !isReading;
+                    }
                     
                     break;
                     
                 case SDL_MOUSEBUTTONUP:
                     //currentEvent = "BUTTON_SPRITE_MOUSE_UP";
                     //std::cout <<  currentEvent << std::endl;
+                    touchPos = glm::vec2(-1.0f,-1.0f);
+                    isTrans = false;
+                    break;
+                    
+                case SDL_MOUSEWHEEL:
+                    double scaleFactor = 1.0;
+                    setLifeTime(clock() + CLOCKS_PER_SEC/2);
+
+                    if (e->wheel.y < 0 )
+                        scaleFactor = 0.98;
+                    else if (e->wheel.y > 0)
+                        scaleFactor = 1.02;
+                    
+                    width *= scaleFactor;
+                    height *= scaleFactor;
+                    isEvent = true;
+                    
                     
                     break;
             }
         }
+        /*if (isTrans) {
+            SDL_GetMouseState( &x, &y );
+            pos.x = x - touchPos.x;
+            pos.y = y - touchPos.y;
+        }*/
     }
-    return false;
+    /*---------------------------------TOUCH_EVENT------------------------------------------*
+    // if target is touched, activate it
+    
+    if (e->type == SDL_FINGERMOTION || e->type == SDL_FINGERDOWN|| e->type == SDL_FINGERUP)
+    {
+        int x = e->tfinger.x * SCREEN_WIDTH;
+        int y = e->tfinger.y * SCREEN_HEIGHT;
+        
+        if (isInside(x, y))
+        {
+            float newPosx = pos.x+e->tfinger.dx*SCREEN_WIDTH;
+            float newPosy = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
+            
+            switch( e->type )
+            {
+                    
+                case SDL_FINGERDOWN:
+                    setLifeTime(time(0) + 10);
+                    
+                    touchPos.x = x - pos.x;
+                    touchPos.y = y - pos.y;
+                    isTrans = true;
+                    isEvent = true;
+                    
+                    
+                    break;
+                case SDL_FINGERMOTION:
+                    
+                    if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
+                        newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
+                    {
+                        pos.x = pos.x+e->tfinger.dx*SCREEN_WIDTH;
+                        pos.y = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
+                        setLifeTime(time(0) + 10); //add time before death
+                    }
+                    
+                    break;
+                    
+                case SDL_FINGERUP:
+                    touchPos = glm::vec2(-1.0f,-1.0f);
+                    isTrans = false;
+                    
+                    break;
+            }
+        }
+    }*/
+    return isEvent;
 }
 
 
@@ -193,7 +295,9 @@ glm::vec2 Card::getVelocity()
     return velocity;
 }
 
-
+bool Card::getReading(){
+    return isReading;
+}
 
 /*---------------------------SETTERS-----------------------------------------*/
 void Card::setHeight(int h)
@@ -292,4 +396,3 @@ void Card::render( SDL_Renderer* gRenderer) // Blir error atm
     SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
     SDL_RenderCopy( gRenderer, texture, NULL, &renderQuad );
 }*/
-
