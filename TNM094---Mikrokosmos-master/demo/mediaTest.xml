@@ -1,0 +1,332 @@
+<content>
+	<!-- CATEGORIES -->
+	<category name="protein" r="1" g="1" b="1" icon_normal="cell_icon_128_A.png" icon_hold="cell_icon_128_B.png" />
+	<category name="virus" r="1" g="0.5" b="0.5" icon_normal="tab_cpp_128_B.png" icon_hold="tab_cpp_128_A.png" />
+	<category name="cell" r="0.5" g="1" b="0.5" icon_normal="tab_dead_128_A.png" icon_hold="tab_dead_128_B.png" />
+	<!--<category name="camera" r="0.5" g="0.5" b="1" icon_normal="tex_cat_photo_normal.png" icon_hold="tex_cat_photo_hold.png" />-->
+	<!--<category name="food" r="1" g="1" b="0.5" icon_normal="tex_cat_photo_normal.png" icon_hold="tex_cat_photo_hold.png" />-->
+	<!--<category name="food" r="1" g="1" b="0.5" icon_normal="cell_icon_128_B.png" icon_hold="cell_icon_128_A.png" />
+	<category name="mustard" r="1" g="0.5" b="1" icon_normal="tex_cat_photo_normal.png" icon_hold="tex_cat_photo_hold.png" />-->
+
+	<!-- MEDIA -->
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/far.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="cell" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Svenska</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>English</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+</content>
