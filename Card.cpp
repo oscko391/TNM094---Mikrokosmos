@@ -5,227 +5,222 @@ Card::Card()
 
 }
 
-Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath)
+Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath, SDL_Renderer* r)
     : svHeader(inSvH)
     , svText(inSvT)
     , enHeader(inEnH)
     , enText(inEnT)
-    , isSwede(lang)
     , pos(inPos)
     , velocity(inVel)
-    , imgPath(textPath)
+    , lifeTime(clock())
+    , path(textPath)
+    , isReading(false)
+    , isTrans(false)
 {
+    infoIndex = infoIndexGenerator++;
+    loadingText(r);
 }
 
 
 /*-----------------Transformation functions-----------------*/
-void Card::move( time_t now )
-{
-
-    time_t after = time(0);
-
-    double curve  = sin ((after - now)*0.00735);
-    double curve2  = sin((after - now) * 0.001);
-
-    pos[0] += ((velocity[0] *curve)/10) ;
-    pos[1] += (velocity[1] * curve2);
-
-    if(pos[0] > (SCREEN_WIDTH-width) || pos[0] < 0 ) // bildsize är 170
-    {
-        velocity[0]  = (velocity[0] * (- 1));
+void Card::move(float timeStep){
+    if (!isReading) {
+        pos[0] += velocity[0]*timeStep; // ((velocity[0] *curve)/10) ;
+        pos[1] += velocity[1]*timeStep; // (velocity[1] * curve2);
+        
+        if(pos[0] > (SCREEN_WIDTH-SCREEN_WIDTH/6))
+        {
+            velocity[0] -= 5;
+        }
+        else if (pos[0] < SCREEN_WIDTH/6-getWidth() )
+        {
+            velocity[0] += 5;
+        }
+        
+        if(pos[1] > (SCREEN_HEIGHT-SCREEN_HEIGHT/6) - 60 )
+        {
+            velocity[1] -= 5;
+        }
+        else if (pos[1] < SCREEN_HEIGHT/6-getHeight())
+        {
+            velocity[1] += 5;
+        }
     }
-
-    if(pos[1] > (SCREEN_HEIGHT-height) || pos[1] < 0 )
-    {
-        velocity[1]  = (velocity[1]  * (- 1));
-    }
-
-    if (std::abs(velocity.x > 2))
-        velocity*=0.5;
-    if (std::abs(velocity.y > 2))
-        velocity*=0.5;
 }
 
-void Card::scale(SDL_Event* e)
-{
-    /*  SDL_Finger* finger1 = SDL_GetTouchFinger(e->mgesture.touchId, 0);
-      SDL_Finger* finger2 = SDL_GetTouchFinger(e->mgesture.touchId, 1);
-
-      double hypot = sqrt(pow(finger1->x*SCREEN_WIDTH - finger2->x*SCREEN_WIDTH,2)
-                          +pow(finger1->y*SCREEN_HEIGHT - finger2->y*SCREEN_HEIGHT,2));
-
-      double scaleFactor = (hypot + e->mgesture.dDist*SCREEN_WIDTH)/hypot;
-
-      width *= scaleFactor;
-      height *= scaleFactor;
-
-     */
+//touch funcs
+void Card::scale(SDL_Event* e){
     SDL_Finger* finger = SDL_GetTouchFinger(e->mgesture.touchId, 0);
-
+    
     double scaleFactor = (sqrt(pow(finger->x - e->mgesture.x,2) + pow(finger->y - e->mgesture.y, 2))+e->mgesture.dDist)
-                         /sqrt(pow(finger->x - e->mgesture.x,2) + pow(finger->y - e->mgesture.y, 2));
-
+    /sqrt(pow(finger->x - e->mgesture.x,2) + pow(finger->y - e->mgesture.y, 2));
+    
     width *= scaleFactor;
     height *= scaleFactor;
 }
+//checks if finger coordinated are within the borders of the card
+bool Card::isInside(int x, int y){
+    bool inside = true;
+    
+    //finger is left of the card
+    if( x < pos[0] )
+    {
+        inside = false;
+    }
+    //finger is right of the card
+    else if( x > (pos[0] + width))
+    {
+        inside = false;
+    }
+    //finger above the card
+    else if( y < pos[1] )
+    {
+        inside = false;
+    }
+    //finger below the card
+    else if( y > (pos[1]+ height))
+    {
+        inside = false;
+    }
+    
+    //if none of the above criteria is true, finger must be inside the card
+    return inside;
+}
+
 
 bool Card::handleEvent( SDL_Event* e )
 {
-
     bool isEvent = false;
     /*-----------------------------MOUSE_EVENT-------------------------------------------*/
-
+    
     if( (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEWHEEL))
     {
         //Get mouse position
         int x, y;
         SDL_GetMouseState( &x, &y );
-
-
+        
+        
         if (isInside(x, y))
         {
             //calculate new position for card
-            float newPosx = x - touchPos.x;
-            float newPosy = y - touchPos.y;
-
+            //float newPosx = x - touchPos.x;
+            //float newPosy = y - touchPos.y;
+            
+            
             //Set mouse over sprite
             switch( e->type )
             {
-            case SDL_MOUSEMOTION:
-
-
-                if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
+                case SDL_MOUSEMOTION:
+                    
+                    
+                    /*if (isTrans  && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
                         newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
-                {
-                    pos.x = newPosx;
-                    pos.y = newPosy;
-                    setLifeTime(time(0) + 10); //add time before death
-
-                }
-
-
-                break;
-
-            case SDL_MOUSEBUTTONDOWN:
-                isEvent = true;
-
-                setLifeTime(time(0) + 10);
-
-
-                if (touchPos.x == -1.0f)
-                {
+                    {
+                        pos.x = newPosx;
+                        pos.y = newPosy;
+                        setLifeTime(clock() + CLOCKS_PER_SEC/2); //add time before death
+                        
+                    }
+                    */
+                    break;
+                    
+                case SDL_MOUSEBUTTONDOWN:
+                    isEvent = true;
+                    
+                    setLifeTime(clock() + CLOCKS_PER_SEC/2);
                     touchPos.x = x - pos.x;
                     touchPos.y = y - pos.y;
                     isTrans = true;
-                }
-
-                break;
-
-            case SDL_MOUSEBUTTONUP:
-                //currentEvent = "BUTTON_SPRITE_MOUSE_UP";
-                //std::cout <<  currentEvent << std::endl;
-                touchPos = glm::vec2(-1.0f,-1.0f);
-                isTrans = false;
-                break;
-
-            case SDL_MOUSEWHEEL:
+                    
+                    /*if (touchPos.x == -1.0f)
+                    {
+                        touchPos.x = x - pos.x;
+                        touchPos.y = y - pos.y;
+                        isTrans = true;
+                    }*/
+                    // {static_cast<int>(getPos().x) + 3 , static_cast<int>(getPos().y) + 3 , getWidth() - 6 , getWidth() / 10}
+                    if ((x > getPos().x + 3) && (x < getPos().x + getWidth() - 6 ) && (y > getPos().y + 3) && (y < getPos().y + getWidth() / 10 ) ) {
+                        isReading = !isReading;
+                    }
+                    
+                    break;
+                    
+                case SDL_MOUSEBUTTONUP:
+                    //currentEvent = "BUTTON_SPRITE_MOUSE_UP";
+                    //std::cout <<  currentEvent << std::endl;
+                    touchPos = glm::vec2(-1.0f,-1.0f);
+                    isTrans = false;
+                    break;
+                    
+                case SDL_MOUSEWHEEL:
                     double scaleFactor = 1.0;
+                    setLifeTime(clock() + CLOCKS_PER_SEC/2);
 
-                    if (e->wheel.y == -1 )
+                    if (e->wheel.y < 0 )
                         scaleFactor = 0.98;
-                    else if (e->wheel.y = 1.02)
+                    else if (e->wheel.y > 0)
                         scaleFactor = 1.02;
-
+                    
                     width *= scaleFactor;
                     height *= scaleFactor;
                     isEvent = true;
-
-
-                break;
+                    
+                    
+                    break;
             }
         }
+        /*if (isTrans) {
+            SDL_GetMouseState( &x, &y );
+            pos.x = x - touchPos.x;
+            pos.y = y - touchPos.y;
+        }*/
     }
-
-    /*---------------------------------TOUCH_EVENT------------------------------------------*/
+    /*---------------------------------TOUCH_EVENT------------------------------------------*
     // if target is touched, activate it
-
+    
     if (e->type == SDL_FINGERMOTION || e->type == SDL_FINGERDOWN|| e->type == SDL_FINGERUP)
     {
         int x = e->tfinger.x * SCREEN_WIDTH;
         int y = e->tfinger.y * SCREEN_HEIGHT;
-
+        
         if (isInside(x, y))
         {
             float newPosx = pos.x+e->tfinger.dx*SCREEN_WIDTH;
             float newPosy = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
-
+            
             switch( e->type )
             {
-
-            case SDL_FINGERDOWN:
-                setLifeTime(time(0) + 10);
-
-                touchPos.x = x - pos.x;
-                touchPos.y = y - pos.y;
-                isTrans = true;
-                isEvent = true;
-
-
-                break;
-            case SDL_FINGERMOTION:
-
-                if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
+                    
+                case SDL_FINGERDOWN:
+                    setLifeTime(time(0) + 10);
+                    
+                    touchPos.x = x - pos.x;
+                    touchPos.y = y - pos.y;
+                    isTrans = true;
+                    isEvent = true;
+                    
+                    
+                    break;
+                case SDL_FINGERMOTION:
+                    
+                    if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
                         newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
-                {
-                    pos.x = pos.x+e->tfinger.dx*SCREEN_WIDTH;
-                    pos.y = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
-                    setLifeTime(time(0) + 10); //add time before death
-                }
-
-                break;
-
-            case SDL_FINGERUP:
-                touchPos = glm::vec2(-1.0f,-1.0f);
-                isTrans = false;
-
-                break;
+                    {
+                        pos.x = pos.x+e->tfinger.dx*SCREEN_WIDTH;
+                        pos.y = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
+                        setLifeTime(time(0) + 10); //add time before death
+                    }
+                    
+                    break;
+                    
+                case SDL_FINGERUP:
+                    touchPos = glm::vec2(-1.0f,-1.0f);
+                    isTrans = false;
+                    
+                    break;
             }
         }
-    }
-
-    /*--------------------------------------------MULTI_TOUCH-------------------------------------------*/
-
-    if ( e->type == SDL_MULTIGESTURE)
-    {
-        SDL_Finger* finger1 = SDL_GetTouchFinger(e->mgesture.touchId, 0);
-        SDL_Finger* finger2 = SDL_GetTouchFinger(e->mgesture.touchId, 1);
-
-
-        int x1 = finger1->x * SCREEN_WIDTH;
-        int y1 = finger1->y * SCREEN_HEIGHT;
-
-        int x2 = finger2->x * SCREEN_WIDTH;
-        int y2 = finger2->y * SCREEN_HEIGHT;
-
-        if (isInside(x1 ,y1) && isInside(x2,y2))
-        {
-            // scaling if fingers are pinching
-            if (fabs( e->mgesture.dDist ) > 0.0002)
-            {
-                scale(e);
-                isEvent = true;
-
-            }
-            if (fabs( e->mgesture.dTheta ) > 3.14 / 1080.0 )
-            {
-                angle += e->mgesture.dTheta * 180/3.14;
-                isEvent = true;
-            }
-        }
-    }
-
-
-
+    }*/
     return isEvent;
 }
 
@@ -234,8 +229,8 @@ bool Card::handleEvent( SDL_Event* e )
 // Destructor
 Card::~Card()
 {
-    SDL_DestroyTexture(cardTexture);
-    cardTexture = NULL;
+  //SDL_DestroyTexture(cardTexture);
+  //cardTexture = NULL;
 }
 /*----------------------------------------------------------*/
 
@@ -250,7 +245,7 @@ int Card::getWidth()
     return width;
 }
 
-double Card::getLifeTime()
+clock_t Card::getLifeTime() const 
 {
     return lifeTime;
 }
@@ -259,12 +254,6 @@ std::vector<std::string> Card::getCategories()
 {
     return categories;
 }
-
-SDL_Texture* Card::getCardTexture()
-{
-    return cardTexture;
-}
-
 
 std::string Card::getSvHeader()
 {
@@ -276,9 +265,9 @@ std::string Card::getSvText()
     return svText;
 }
 
-std::string Card::getImgPath()
+std::string Card::getPath() const
 {
-    return imgPath;
+    return path;
 }
 
 
@@ -291,11 +280,11 @@ std::string Card::getEnText()
 {
     return enText;
 }
-
+/*
 bool Card::getIsSwede()
 {
     return isSwede;
-}
+}*/
 
 glm::vec3 Card::getPos()
 {
@@ -307,6 +296,13 @@ glm::vec2 Card::getVelocity()
     return velocity;
 }
 
+bool Card::getReading(){
+    return isReading;
+}
+
+SDL_Texture* Card::getHeader(){
+    return headers[infoIndex];
+}
 
 
 /*---------------------------SETTERS-----------------------------------------*/
@@ -315,10 +311,10 @@ void Card::setHeight(int h)
     height = h;
 }
 
-void Card::setImgPath(std::string s)
+/*void Card::setImgPath(std::string s)
 {
     imgPath = s;
-}
+}*/
 
 
 void Card::setWidth(int w)
@@ -326,7 +322,7 @@ void Card::setWidth(int w)
     width = w;
 }
 
-void Card::setLifeTime(double inLife)
+void Card::setLifeTime(clock_t inLife)
 {
     lifeTime = inLife;
 }
@@ -345,19 +341,19 @@ void Card::setVelocity(glm::vec2 inVel)
 {
     velocity = inVel;
 }
-
+/*
 void Card::changeLang()
 {
     if(isSwede)
         isSwede = false;
     else
         isSwede = true;
-}
+}*/
 
 /*----------------------------------------------------------------------------*/
 
 
-
+/*
 bool Card::loadTexture(SDL_Renderer* gRenderer)
 {
     //The final texture
@@ -387,53 +383,68 @@ bool Card::loadTexture(SDL_Renderer* gRenderer)
 
     //Return success
     cardTexture = newTexture;
-
     return cardTexture != NULL;
+}*/
+
+bool Card::loadingText(SDL_Renderer* r){
+    // /Library/Fonts   Arial.ttf
+    bool success = true;
+    //SDL_Texture* newTexture = NULL;
+    SDL_Surface* textSurface = NULL;
+    
+    if( TTF_Init() == -1 )
+    {
+        printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+        success = false;
+    }
+    TTF_Font *gFont = NULL;
+    gFont = TTF_OpenFont( "/Library/Fonts/Arial.ttf", 100 );
+    if( gFont == NULL )
+    {
+        printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+        success = false;
+    }
+    
+    SDL_Color textColor = { 0, 0, 0};
+    //std::string newText = "";
+    
+    textSurface = TTF_RenderText_Blended( gFont, svHeader.c_str(), textColor);
+    if( textSurface == NULL )
+    {
+        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+        success = false;
+    }
+    else
+    {
+        //Create texture from surface pixels
+        headers.push_back( SDL_CreateTextureFromSurface( r, textSurface ));
+        if( headers[infoIndex] == NULL )
+        {
+            printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+            success = false;
+        }
+        //Get rid of old surface
+        SDL_FreeSurface( textSurface );
+    }
+    TTF_CloseFont( gFont );
+    gFont = NULL;
+    
+    return success;
 }
 
-void Card::render( SDL_Renderer* gRenderer) // Blir error atm
+void Card::render( SDL_Renderer* r) // Blir error atm
 {
     //Set rendering space and render to screen
 
-    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), int(width), int(height) };
-
-    SDL_RenderCopyEx( gRenderer, cardTexture, NULL, &renderQuad, angle, NULL, SDL_FLIP_NONE );
+    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), static_cast<int>(width), static_cast<int>(height) };
+    SDL_SetRenderDrawColor( r, 0xFF, 0x00, 0x00, 0xFF );
+    SDL_RenderFillRect( r, &renderQuad );
 }
 
-void Card::renderActive( SDL_Renderer* gRenderer) // Blir error atm
+/*void Card::render( SDL_Renderer* gRenderer, SDL_Texture* texture) // Blir error atm
 {
     //Set rendering space and render to screen
-
-    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), static_cast<int>(floor(width*1.1f)), static_cast<int>(floor(height*1.1f)) };
-
-    SDL_RenderCopyEx( gRenderer, cardTexture, NULL, &renderQuad, angle , NULL, SDL_FLIP_NONE);
-}
-bool Card::isInside(int x, int y)
-{
-    bool inside = true;
-
-    //finger is left of the card
-    if( x < pos[0] )
-    {
-        inside = false;
-    }
-    //finger is right of the card
-    else if( x > (pos[0] + width))
-    {
-        inside = false;
-    }
-    //finger above the card
-    else if( y < pos[1] )
-    {
-        inside = false;
-    }
-    //finger below the card
-    else if( y > (pos[1]+ height))
-    {
-        inside = false;
-    }
-
-    //if none of the above criteria is true, finger must be inside the card
-    return inside;
-
-}
+    
+    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
+    SDL_RenderCopy( gRenderer, texture, NULL, &renderQuad );
+}*/

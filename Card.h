@@ -1,76 +1,77 @@
-#ifndef CARD_H
-#define CARD_H
-
-//#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
-#if defined (__APPLE_CC__) //if apple dator
-   #include <SDL2/SDL.h>
-   #include "glm.hpp"
-   #include <SDL2/SDL_image.h>
-#else //annars windows version
-    #include <SDL.h>
-    #include <SDL_image.h>
-    #include <glm/glm.hpp>
-#endif
+#ifndef SDL_tutorial_Card_h
+#define SDL_tutorial_Card_h
+#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
+#include <SDL2_image/SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2_ttf/SDL_ttf.h>
 
 #include <vector>
 #include <string>
 #include <stdio.h>
-#include <string>
 #include <cmath>
 #include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 #include <iostream>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 700; // 1200 //Flyttas till main sen?
-const int SCREEN_HEIGHT = 300; // 700
+const int SCREEN_WIDTH = 1200; // Flyttas till main sen? 
+const int SCREEN_HEIGHT = 700;
 
 
 class Card
 {
 private:
-    double height = 100;
-    double width= 150;
-    double lifeTime = -1;
+    double height = 120;
+    double width= 200;
+    clock_t lifeTime;
     std::vector<std::string> categories;
     std::string svHeader;
     std::string svText;
     std::string enHeader;
     std::string enText;
-    bool isSwede = true; // limiting us to 2 languages
-    bool isTrans = false;
+    //bool isSwede = true; // limiting us to 2 languages
     glm::vec3 pos;
-    double angle = 0.0;
     glm::vec2 velocity;
+    std::string path;
+    
+    bool isTrans;
+    double angle = 0.0;
     glm::vec2 touchPos = glm::vec2(-1.0f,-1.0f);
-    std::string imgPath;
+    
+    bool isReading;
+    
+    static std::vector<SDL_Texture*> headers;
+    static std::vector<SDL_Texture*> infoText;
+    int infoIndex;
+    static int infoIndexGenerator;
+    bool loadingText(SDL_Renderer* r);
 
-    SDL_Texture* cardTexture = NULL;
-
-
+    //SDL_Texture* cardTexture = NULL;
+    
 
 public:
+    //int texIndex = -1; // images
     //constructors
     Card(); //default construtor
-    Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, bool lang, glm::vec3 inPos, glm::vec2 inVel, std::string textPath);
+    Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath, SDL_Renderer* r);
     ~Card();
     //Transformation functions
-    void move( time_t now );
+    void move(float timeStep);
     bool handleEvent( SDL_Event* e );
-
-
+    
     //getters
-    double getHeight();
-    double getWidth();
-    double getLifeTime();
+    int getHeight();
+    int getWidth();
+    clock_t getLifeTime() const;
     std::vector<std::string> getCategories();
     std::string getSvHeader();
     std::string getSvText();
     std::string getEnHeader();
     std::string getEnText();
-    std::string getImgPath();//png
-    SDL_Texture* getCardTexture();
+    std::string getPath() const;
+    bool getReading();
+    SDL_Texture* getHeader();
 
-    bool getIsSwede();
+    //bool getIsSwede();
     glm::vec3 getPos();
     glm::vec2 getVelocity();
 
@@ -78,21 +79,24 @@ public:
     //setters
     void setHeight(int h);
     void setWidth(int w);
-    void setLifeTime(double inLife);
-    void addCategory( std::string inCat);
+    void setLifeTime(clock_t inLife);
+    void addCategory( std::string inCat); // behövs?!? alla kategorier läses in direkt
     void setPos(glm::vec3 inPos);
     void setVelocity(glm::vec2 inVel);
-    void setImgPath(std::string s);
+    //void setImgPath(std::string s); // for images
 
-    void changeLang();
-    bool loadTexture(SDL_Renderer* gRenderer);
-    void render( SDL_Renderer* gRenderer);
-    void renderActive( SDL_Renderer* gRenderer);
-
-     //touch funcs
+    //void changeLang();
+    //bool loadTexture(SDL_Renderer* gRenderer);
+    virtual void render( SDL_Renderer* r);
+    //void render( SDL_Renderer* gRenderer, SDL_Texture* texture); // for images
+    
+    
+    //touch funcs
     void scale(SDL_Event* e);
     //checks if finger coordinated are within the borders of the card
     bool isInside(int x, int y);
-
 };
-#endif // CARD_H
+
+    //if eng ->set lang to swe
+
+#endif
