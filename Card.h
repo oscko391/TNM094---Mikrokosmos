@@ -72,7 +72,6 @@ public:
     SDL_Texture* getHeader();
     double getAngle();
 
-
     //bool getIsSwede();
     glm::vec3 getPos();
     glm::vec2 getVelocity();

@@ -28,7 +28,6 @@ void Card::move(float timeStep){
         pos[0] += velocity[0]*timeStep; // ((velocity[0] *curve)/10) ;
         pos[1] += velocity[1]*timeStep; // (velocity[1] * curve2);
         angle += 0.1*sin(velocity[0]) + 0.1*sin(velocity[1]);
-
         
         if(pos[0] > (SCREEN_WIDTH-SCREEN_WIDTH/6))
         {
