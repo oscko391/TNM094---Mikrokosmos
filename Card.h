@@ -1,6 +1,5 @@
 #ifndef SDL_tutorial_Card_h
 #define SDL_tutorial_Card_h
-//#include </Users/my/Documents/LiU/Kandidat/SDL_tutorial/glm/glm/glm.hpp>
 #include "glm.hpp"
 #include <SDL2_image/SDL_image.h>
 #include <SDL2/SDL.h>
@@ -14,7 +13,7 @@
 #include <iostream>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1200; // Flyttas till main sen?
+const int SCREEN_WIDTH = 1200; // Flyttas till main sen? 
 const int SCREEN_HEIGHT = 700;
 
 
@@ -45,10 +44,10 @@ private:
     int infoIndex;
     static int infoIndexGenerator;
     bool loadingText(SDL_Renderer* r);
-    
+
     //SDL_Texture* cardTexture = NULL;
     
-    
+
 public:
     //int texIndex = -1; // images
     //constructors
@@ -71,12 +70,14 @@ public:
     std::string getPath() const;
     bool getReading();
     SDL_Texture* getHeader();
-    
+    double getAngle();
+
+
     //bool getIsSwede();
     glm::vec3 getPos();
     glm::vec2 getVelocity();
-    
-    
+
+
     //setters
     void setHeight(int h);
     void setWidth(int w);
@@ -85,7 +86,7 @@ public:
     void setPos(glm::vec3 inPos);
     void setVelocity(glm::vec2 inVel);
     //void setImgPath(std::string s); // for images
-    
+
     //void changeLang();
     //bool loadTexture(SDL_Renderer* gRenderer);
     virtual void render( SDL_Renderer* r);
@@ -98,6 +99,6 @@ public:
     bool isInside(int x, int y);
 };
 
-//if eng ->set lang to swe
+    //if eng ->set lang to swe
 
 #endif

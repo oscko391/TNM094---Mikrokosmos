@@ -2,20 +2,20 @@
 
 Card::Card()
 {
-    
+
 }
 
 Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath, SDL_Renderer* r)
-: svHeader(inSvH)
-, svText(inSvT)
-, enHeader(inEnH)
-, enText(inEnT)
-, pos(inPos)
-, velocity(inVel)
-, lifeTime(clock())
-, path(textPath)
-, isReading(false)
-, isTrans(false)
+    : svHeader(inSvH)
+    , svText(inSvT)
+    , enHeader(inEnH)
+    , enText(inEnT)
+    , pos(inPos)
+    , velocity(inVel)
+    , lifeTime(clock())
+    , path(textPath)
+    , isReading(false)
+    , isTrans(false)
 {
     infoIndex = infoIndexGenerator++;
     loadingText(r);
@@ -27,6 +27,8 @@ void Card::move(float timeStep){
     if (!isReading) {
         pos[0] += velocity[0]*timeStep; // ((velocity[0] *curve)/10) ;
         pos[1] += velocity[1]*timeStep; // (velocity[1] * curve2);
+        angle += 0.1*sin(velocity[0]) + 0.1*sin(velocity[1]);
+
         
         if(pos[0] > (SCREEN_WIDTH-SCREEN_WIDTH/6))
         {
@@ -114,14 +116,14 @@ bool Card::handleEvent( SDL_Event* e )
                     
                     
                     /*if (isTrans  && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
-                     newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
-                     {
-                     pos.x = newPosx;
-                     pos.y = newPosy;
-                     setLifeTime(clock() + CLOCKS_PER_SEC/2); //add time before death
-                     
-                     }
-                     */
+                        newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
+                    {
+                        pos.x = newPosx;
+                        pos.y = newPosy;
+                        setLifeTime(clock() + CLOCKS_PER_SEC/2); //add time before death
+                        
+                    }
+                    */
                     break;
                     
                 case SDL_MOUSEBUTTONDOWN:
@@ -133,11 +135,11 @@ bool Card::handleEvent( SDL_Event* e )
                     isTrans = true;
                     
                     /*if (touchPos.x == -1.0f)
-                     {
-                     touchPos.x = x - pos.x;
-                     touchPos.y = y - pos.y;
-                     isTrans = true;
-                     }*/
+                    {
+                        touchPos.x = x - pos.x;
+                        touchPos.y = y - pos.y;
+                        isTrans = true;
+                    }*/
                     // {static_cast<int>(getPos().x) + 3 , static_cast<int>(getPos().y) + 3 , getWidth() - 6 , getWidth() / 10}
                     if ((x > getPos().x + 3) && (x < getPos().x + getWidth() - 6 ) && (y > getPos().y + 3) && (y < getPos().y + getWidth() / 10 ) ) {
                         isReading = !isReading;
@@ -155,7 +157,7 @@ bool Card::handleEvent( SDL_Event* e )
                 case SDL_MOUSEWHEEL:
                     double scaleFactor = 1.0;
                     setLifeTime(clock() + CLOCKS_PER_SEC/2);
-                    
+
                     if (e->wheel.y < 0 )
                         scaleFactor = 0.98;
                     else if (e->wheel.y > 0)
@@ -170,57 +172,57 @@ bool Card::handleEvent( SDL_Event* e )
             }
         }
         /*if (isTrans) {
-         SDL_GetMouseState( &x, &y );
-         pos.x = x - touchPos.x;
-         pos.y = y - touchPos.y;
-         }*/
+            SDL_GetMouseState( &x, &y );
+            pos.x = x - touchPos.x;
+            pos.y = y - touchPos.y;
+        }*/
     }
     /*---------------------------------TOUCH_EVENT------------------------------------------*
-     // if target is touched, activate it
-     
-     if (e->type == SDL_FINGERMOTION || e->type == SDL_FINGERDOWN|| e->type == SDL_FINGERUP)
-     {
-     int x = e->tfinger.x * SCREEN_WIDTH;
-     int y = e->tfinger.y * SCREEN_HEIGHT;
-     
-     if (isInside(x, y))
-     {
-     float newPosx = pos.x+e->tfinger.dx*SCREEN_WIDTH;
-     float newPosy = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
-     
-     switch( e->type )
-     {
-     
-     case SDL_FINGERDOWN:
-     setLifeTime(time(0) + 10);
-     
-     touchPos.x = x - pos.x;
-     touchPos.y = y - pos.y;
-     isTrans = true;
-     isEvent = true;
-     
-     
-     break;
-     case SDL_FINGERMOTION:
-     
-     if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
-     newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
-     {
-     pos.x = pos.x+e->tfinger.dx*SCREEN_WIDTH;
-     pos.y = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
-     setLifeTime(time(0) + 10); //add time before death
-     }
-     
-     break;
-     
-     case SDL_FINGERUP:
-     touchPos = glm::vec2(-1.0f,-1.0f);
-     isTrans = false;
-     
-     break;
-     }
-     }
-     }*/
+    // if target is touched, activate it
+    
+    if (e->type == SDL_FINGERMOTION || e->type == SDL_FINGERDOWN|| e->type == SDL_FINGERUP)
+    {
+        int x = e->tfinger.x * SCREEN_WIDTH;
+        int y = e->tfinger.y * SCREEN_HEIGHT;
+        
+        if (isInside(x, y))
+        {
+            float newPosx = pos.x+e->tfinger.dx*SCREEN_WIDTH;
+            float newPosy = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
+            
+            switch( e->type )
+            {
+                    
+                case SDL_FINGERDOWN:
+                    setLifeTime(time(0) + 10);
+                    
+                    touchPos.x = x - pos.x;
+                    touchPos.y = y - pos.y;
+                    isTrans = true;
+                    isEvent = true;
+                    
+                    
+                    break;
+                case SDL_FINGERMOTION:
+                    
+                    if (isTrans && newPosx < (SCREEN_WIDTH - width) && newPosx > 0 &&
+                        newPosy < (SCREEN_HEIGHT - height) && newPosy > 0)
+                    {
+                        pos.x = pos.x+e->tfinger.dx*SCREEN_WIDTH;
+                        pos.y = pos.y+e->tfinger.dy*SCREEN_HEIGHT;
+                        setLifeTime(time(0) + 10); //add time before death
+                    }
+                    
+                    break;
+                    
+                case SDL_FINGERUP:
+                    touchPos = glm::vec2(-1.0f,-1.0f);
+                    isTrans = false;
+                    
+                    break;
+            }
+        }
+    }*/
     return isEvent;
 }
 
@@ -229,8 +231,8 @@ bool Card::handleEvent( SDL_Event* e )
 // Destructor
 Card::~Card()
 {
-    //SDL_DestroyTexture(cardTexture);
-    //cardTexture = NULL;
+  //SDL_DestroyTexture(cardTexture);
+  //cardTexture = NULL;
 }
 /*----------------------------------------------------------*/
 
@@ -245,7 +247,7 @@ int Card::getWidth()
     return width;
 }
 
-clock_t Card::getLifeTime() const
+clock_t Card::getLifeTime() const 
 {
     return lifeTime;
 }
@@ -281,10 +283,10 @@ std::string Card::getEnText()
     return enText;
 }
 /*
- bool Card::getIsSwede()
- {
- return isSwede;
- }*/
+bool Card::getIsSwede()
+{
+    return isSwede;
+}*/
 
 glm::vec3 Card::getPos()
 {
@@ -304,6 +306,9 @@ SDL_Texture* Card::getHeader(){
     return headers[infoIndex];
 }
 
+double Card::getAngle() {
+    return angle;
+}
 
 /*---------------------------SETTERS-----------------------------------------*/
 void Card::setHeight(int h)
@@ -312,9 +317,9 @@ void Card::setHeight(int h)
 }
 
 /*void Card::setImgPath(std::string s)
- {
- imgPath = s;
- }*/
+{
+    imgPath = s;
+}*/
 
 
 void Card::setWidth(int w)
@@ -342,49 +347,49 @@ void Card::setVelocity(glm::vec2 inVel)
     velocity = inVel;
 }
 /*
- void Card::changeLang()
- {
- if(isSwede)
- isSwede = false;
- else
- isSwede = true;
- }*/
+void Card::changeLang()
+{
+    if(isSwede)
+        isSwede = false;
+    else
+        isSwede = true;
+}*/
 
 /*----------------------------------------------------------------------------*/
 
 
 /*
- bool Card::loadTexture(SDL_Renderer* gRenderer)
- {
- //The final texture
- SDL_Texture* newTexture = NULL;
- 
- //Load image at specified path
- SDL_Surface* loadedSurface = IMG_Load(imgPath.c_str());
- if( loadedSurface == NULL )
- {
- printf( "Unable to load image %s! SDL_image Error: %s\n", imgPath.c_str(), IMG_GetError() );
- }
- else
- {
- //Color key image
- SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
- 
- //Create texture from surface pixels
- newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
- if( newTexture == NULL )
- {
- printf( "Unable to create texture from %s! SDL Error: %s\n", imgPath.c_str(), SDL_GetError() );
- }
- 
- //Get rid of old loaded surface
- SDL_FreeSurface( loadedSurface );
- }
- 
- //Return success
- cardTexture = newTexture;
- return cardTexture != NULL;
- }*/
+bool Card::loadTexture(SDL_Renderer* gRenderer)
+{
+    //The final texture
+    SDL_Texture* newTexture = NULL;
+
+    //Load image at specified path
+    SDL_Surface* loadedSurface = IMG_Load(imgPath.c_str());
+    if( loadedSurface == NULL )
+    {
+        printf( "Unable to load image %s! SDL_image Error: %s\n", imgPath.c_str(), IMG_GetError() );
+    }
+    else
+    {
+        //Color key image
+        SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+
+        //Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+        if( newTexture == NULL )
+        {
+            printf( "Unable to create texture from %s! SDL Error: %s\n", imgPath.c_str(), SDL_GetError() );
+        }
+
+        //Get rid of old loaded surface
+        SDL_FreeSurface( loadedSurface );
+    }
+
+    //Return success
+    cardTexture = newTexture;
+    return cardTexture != NULL;
+}*/
 
 bool Card::loadingText(SDL_Renderer* r){
     // /Library/Fonts   Arial.ttf
@@ -398,7 +403,7 @@ bool Card::loadingText(SDL_Renderer* r){
         success = false;
     }
     TTF_Font *gFont = NULL;
-    gFont = TTF_OpenFont( "/Library/Fonts/Arial Narrow.ttf", 100 );
+    gFont = TTF_OpenFont( "/Library/Fonts/Arial.ttf", 100 );
     if( gFont == NULL )
     {
         printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -435,16 +440,16 @@ bool Card::loadingText(SDL_Renderer* r){
 void Card::render( SDL_Renderer* r) // Blir error atm
 {
     //Set rendering space and render to screen
-    
+
     SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), static_cast<int>(width), static_cast<int>(height) };
     SDL_SetRenderDrawColor( r, 0xFF, 0x00, 0x00, 0xFF );
     SDL_RenderFillRect( r, &renderQuad );
 }
 
 /*void Card::render( SDL_Renderer* gRenderer, SDL_Texture* texture) // Blir error atm
- {
- //Set rendering space and render to screen
- 
- SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
- SDL_RenderCopy( gRenderer, texture, NULL, &renderQuad );
- }*/
+{
+    //Set rendering space and render to screen
+    
+    SDL_Rect renderQuad = {static_cast<int>(pos.x) , static_cast<int>(pos.y), width, height };
+    SDL_RenderCopy( gRenderer, texture, NULL, &renderQuad );
+}*/

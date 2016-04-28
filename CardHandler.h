@@ -15,7 +15,7 @@
 class CardHandler
 {
 private:
-    std::vector<Card*> vecCard;
+    //std::vector<Card*> vecCard;
     std::vector<Category> vecCat;
     std::vector<std::vector<Card*>> catCard;
     std::vector<Card*> currentCards;
@@ -30,7 +30,7 @@ private:
 public:
     CardHandler(std::string filePath, SDL_Renderer* r);
     
-    std::vector<Card*> getVecCard();
+    std::vector<Card*> getCurrentCard();
     std::vector<Card*> getAll();
     std::vector<SDL_Event> getFrameEvents();
     

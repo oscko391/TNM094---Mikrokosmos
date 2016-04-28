@@ -3,18 +3,18 @@
 CardHandler::CardHandler(std::string filePath, SDL_Renderer* r)
 {
     readXml(filePath, r);
-    currentCards = vecCard;
+    currentCards = catCard[0];
     pixPerCat = 1100/(vecCat.size() + 1);
 }
 
-std::vector<Card*> CardHandler::getVecCard()
+std::vector<Card*> CardHandler::getCurrentCard()
 {
     return currentCards;
 }
 
 std::vector<Card*> CardHandler::getAll()
 {
-    return vecCard;
+    return catCard[0];
 }
 
 // loops over all the cards and then loops over all the events and handles them
@@ -57,7 +57,7 @@ bool CardHandler::menuEvent(SDL_Event* e){
         SDL_GetMouseState( &x, &y );
         if (x > 50 && x < 1150 && y > 640 && y < 690) {
             if (x < p) {
-                currentCards = vecCard;
+                currentCards = catCard[0];
                 return true;
             }
             for (int i = 0; i < vecCat.size(); i++) {
@@ -76,7 +76,7 @@ bool CardHandler::menuEvent(SDL_Event* e){
         int y = e->tfinger.y * SCREEN_HEIGHT;
         if (x > 50 && x < 1150 && y > 640 && y < 690) {
             if (x < p) {
-                currentCards = vecCard;
+                currentCards = catCard[0];
                 return true;
             }
             for (int i = 0; i < vecCat.size(); i++) {
@@ -221,11 +221,12 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
         
         
         PhotoCard* newCard = new PhotoCard(cardCat, seHeader, seText, enHeader, enText, position, velocity, mediaPath, r);
-        vecCard.push_back(newCard);
+        //vecCard.push_back(newCard);
+        catCard[0].push_back(newCard); // Insert all cards in catCard[0]
         
         // adding the card to categories vector
         for (int i = 0; i < cardCat.size(); i++) {
-            for (int j = 0; j < vecCat.size(); j++) {
+            for (int j = 1; j < vecCat.size(); j++) { // j=1 because catCard[0] contains all cards
                 if (vecCat[j].getCatName() == cardCat[i]) {
                     catCard[j].push_back(newCard);
                 }
