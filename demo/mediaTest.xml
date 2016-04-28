@@ -1,99 +1,147 @@
 <content>
 	<!-- CATEGORIES -->
-	<category name="protein" r="1" g="1" b="1" icon_normal="cell_icon_128_A.png" icon_hold="cell_icon_128_B.png" />
-	<category name="virus" r="1" g="0.5" b="0.5" icon_normal="tab_cpp_128_B.png" icon_hold="tab_cpp_128_A.png" />
-	<category name="cell" r="0.5" g="1" b="0.5" icon_normal="tab_dead_128_A.png" icon_hold="tab_dead_128_B.png" />
-	<!--<category name="camera" r="0.5" g="0.5" b="1" icon_normal="tex_cat_photo_normal.png" icon_hold="tex_cat_photo_hold.png" />-->
-	<!--<category name="food" r="1" g="1" b="0.5" icon_normal="tex_cat_photo_normal.png" icon_hold="tex_cat_photo_hold.png" />-->
-	<!--<category name="food" r="1" g="1" b="0.5" icon_normal="cell_icon_128_B.png" icon_hold="cell_icon_128_A.png" />
-	<category name="mustard" r="1" g="0.5" b="1" icon_normal="tex_cat_photo_normal.png" icon_hold="tex_cat_photo_hold.png" />-->
+    <category name="protein" tex_se="Proteiner" tex_en="Proteins" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+    <category name="virus" tex_se="Virus" tex_en="Viruses" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+    <category name="cell" tex_se="Celler" tex_en="Cells" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+    <category name="gener" tex_se="Gener" tex_en="Genes" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+    <category name="molekyler" tex_se="Molekyler" tex_en="Molecules" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+    <category name="livsproseccer" tex_se="Livsproseccer" tex_en="Life Processes" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+    <category name="sjukdomar" tex_se="Sjukdomar" tex_en="Diseases" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+
 
 	<!-- MEDIA -->
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/far.jpg" scale_exp="-3">
-        <category name="protein" />
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
+        <category name="virus" />
         <category name="cell" />
         <se>
-            <header>Svenska</header>
+            <header>Ribosom</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Ribosome</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="gener" />
         <se>
-            <header>Svenska</header>
+            <header>Prionprotein</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Prion protein</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
+        <category name="molekyler" />
         <category name="protein" />
-        <category name="cell" />
         <se>
-            <header>Svenska</header>
+            <header>DNA-molekyl</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>DNA molecule</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="sjukdomar" />
+        <category name="virus" />
         <se>
-            <header>Svenska</header>
+            <header>Genetiskt fingeravtryck</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Genetic fingerprint</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="livsproseccer" />
         <se>
-            <header>Svenska</header>
+            <header>Växtvirus</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Plant virus</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="livsproseccer" />
         <category name="cell" />
         <se>
-            <header>Svenska</header>
+            <header>Röda blodkroppar</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Red blood cells</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="virus" />
+        <se>
+            <header>Insulin</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>Insulin</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/07.jpg" scale_exp="-3">
+        <category name="molekyler" />
+        <se>
+            <header>Transfer-RNA (tRNA)</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>Transfer RNA (tRNA)</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
+        <category name="sjukdomar" />
+        <category name="cell" />
+        <se>
+            <header>Antikropp och vattenmolekyl</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>Antibody and water molecule</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
         <category name="protein" />
         <se>
-            <header>Svenska</header>
+            <header>Bakterievirus</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Bacterial virus</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/07.jpg" scale_exp="-3">
+        <category name="protein" />
+        <se>
+            <header>Antikroppar binder till främmande protein</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>Antibodies binding to foreign protein</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="virus" />
         <category name="cell" />
         <se>
-            <header>Svenska</header>
+            <header>Virus + 2C</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
@@ -102,230 +150,117 @@
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="gener" />
         <se>
-            <header>Svenska</header>
+            <header>EC-SOD - skyddar celler mot syreradikaler</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>EC-SOD - protect cells from oxygen radical damage</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
+        <category name="molekyler" />
         <category name="protein" />
-        <category name="cell" />
         <se>
-            <header>Svenska</header>
+            <header>Eukarot cell</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Eykarotic cell</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="sjukdomar" />
+        <category name="virus" />
         <se>
-            <header>Svenska</header>
+            <header>Bildande av poliovirus</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Poliovirus formation</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="livsproseccer" />
         <se>
-            <header>Svenska</header>
+            <header>Svininfluensa virus (H1N1)</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>Swine flu virus (H1N1)</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
-        <category name="protein" />
+        <category name="livsproseccer" />
         <category name="cell" />
         <se>
-            <header>Svenska</header>
+            <header>HIV virus tränger ut ur infekterad cell</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>HIV virus budding from a cell</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
+        <category name="protein" />
+        <category name="virus" />
+        <se>
+            <header>HIV-virus</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>HIV virus</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/07.jpg" scale_exp="-3">
+        <category name="molekyler" />
+        <se>
+            <header>Stamcell</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>Stem cell</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </en>
+    </media>
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
+        <category name="sjukdomar" />
+        <category name="cell" />
+        <se>
+            <header>Poliovirus med mänsklig cellreceptor</header>
+            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+        </se>
+        <en>
+            <header>Poliovirus with human cell receptors</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
     <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
         <category name="protein" />
         <se>
-            <header>Svenska</header>
+            <header>SOD skyddar mot syreradikaler</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
+            <header>SOD protect us against oxygen radicals</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg" scale_exp="-3">
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/07.jpg" scale_exp="-3">
         <category name="protein" />
-        <category name="cell" />
         <se>
-            <header>Svenska</header>
+            <header>HIV-virus infekterar en cell</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </se>
         <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
-        <category name="protein" />
-        <category name="cell" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
-        <category name="protein" />
-        <category name="cell" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg" scale_exp="-3">
-        <category name="protein" />
-        <category name="cell" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/01.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/02.jpg" scale_exp="-3">
-        <category name="protein" />
-        <category name="cell" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/05.jpg" scale_exp="-3">
-        <category name="protein" />
-        <category name="cell" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </en>
-    </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/06.jpg" scale_exp="-3">
-        <category name="protein" />
-        <se>
-            <header>Svenska</header>
-            <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
-        </se>
-        <en>
-            <header>English</header>
+            <header>HIV virus infecting a cell</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
