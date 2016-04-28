@@ -70,6 +70,7 @@ public:
     std::string getPath() const;
     bool getReading();
     SDL_Texture* getHeader();
+    double getAngle();
 
     //bool getIsSwede();
     glm::vec3 getPos();
