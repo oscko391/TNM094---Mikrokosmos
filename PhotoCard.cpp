@@ -47,8 +47,9 @@ void PhotoCard::render( SDL_Renderer* gRenderer) // Blir error atm
     //Set rendering space and render to screen
     
     SDL_Rect renderQuad = {static_cast<int>(getPos().x) , static_cast<int>(getPos().y), getWidth(), getHeight() };
-    
+        
     SDL_RenderCopyEx( gRenderer, theTextures[texIndex], NULL, &renderQuad, getAngle(), NULL, SDL_FLIP_NONE );
+    
 
 }
 
@@ -87,9 +88,27 @@ SDL_Texture* PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
     SDL_Rect renderQuad = {w/50 , w/50, w, h };
     SDL_RenderCopyEx( r, imgTexture , NULL, &renderQuad, NULL, NULL, SDL_FLIP_NONE );
     
+    int header_w, header_h;
+    SDL_QueryTexture(getHeader(), NULL, NULL, &header_w, &header_h);
+    double f = 1.0;
+    if (header_w > w - w/25) {
+        f = (w - w/25)/static_cast<double>(header_w);;
+        header_w *= f;
+        header_h *= f;
+    }
+    if (header_h > w / 10) {
+        f = (w / 10)/static_cast<double>(header_h);;
+        header_w *= f;
+        header_h *= f;
+    }
+    int smaller_w = ((w - w/25) - header_w)/2;
+    int smaller_h = ((w/10) - header_h)/2;
+    
     SDL_Rect headQuad = {w/25, w/25  , w - w/25  , w / 10};
     SDL_SetRenderDrawColor( r, 0xDD, 0xDD, 0xDD, 0xCC );
     SDL_RenderFillRect( r, &headQuad );
+    
+    headQuad = {w/25 + smaller_w, w/25 + smaller_h , static_cast<int>(header_w)  , static_cast<int>(header_h)};
     SDL_RenderCopyEx(r, getHeader(), NULL, &headQuad, 0, NULL, SDL_FLIP_NONE);
     
     SDL_SetRenderTarget( r, NULL );
