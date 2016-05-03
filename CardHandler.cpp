@@ -1,20 +1,21 @@
 #include "CardHandler.h"
+#include <algorithm>
 
 CardHandler::CardHandler(std::string filePath, SDL_Renderer* r)
 {
     readXml(filePath, r);
-    currentCards = catCard[0];
+    currentCards = vecCard;
     pixPerCat = 1100/(vecCat.size() + 1);
 }
 
-std::vector<Card*> CardHandler::getCurrentCard()
+std::vector<Card*> CardHandler::getVecCard()
 {
     return currentCards;
 }
 
 std::vector<Card*> CardHandler::getAll()
 {
-    return catCard[0];
+    return vecCard;
 }
 
 // loops over all the cards and then loops over all the events and handles them
@@ -34,7 +35,7 @@ void CardHandler::HandleEvents()
             }
         }
     }*/
-    
+
     for (int indo = 0; indo < currentCards.size(); indo++)
     {
         for (int indi = 0; indi < frameEvents.size(); indi++) {
@@ -57,7 +58,7 @@ bool CardHandler::menuEvent(SDL_Event* e){
         SDL_GetMouseState( &x, &y );
         if (x > 50 && x < 1150 && y > 640 && y < 690) {
             if (x < p) {
-                currentCards = catCard[0];
+                currentCards = vecCard;
                 return true;
             }
             for (int i = 0; i < vecCat.size(); i++) {
@@ -76,7 +77,7 @@ bool CardHandler::menuEvent(SDL_Event* e){
         int y = e->tfinger.y * SCREEN_HEIGHT;
         if (x > 50 && x < 1150 && y > 640 && y < 690) {
             if (x < p) {
-                currentCards = catCard[0];
+                currentCards = vecCard;
                 return true;
             }
             for (int i = 0; i < vecCat.size(); i++) {
@@ -111,11 +112,11 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
     {
         return false;
     }
-    
+
     // making it the right format (char) for the parsing to xml doc
     std::string xml_str;
     xml_str.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
-    
+
     // creating a xml_document and parsing the xml-file, making a DOM-tree
     rapidxml::xml_document<> doc;
     try
@@ -126,50 +127,50 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
     {
         return false;
     }
-    
-    
+
+
     // accesing the first node in the file
     rapidxml::xml_node<>* content = doc.first_node("content");
-    
+
     ///--------CATEGORY----------///
     // accesing all category nodes in content
     for (rapidxml::xml_node<>* second = content->first_node("category"); second <= content->last_node("category"); second = second->next_sibling())
     {
         std::string cName = second->first_attribute("name")->value();
-        
+
         // Indicra alla variabler som category behöver
         std::string texSv;
         std::string texEn;
         std::string catPath;
-        
+
         std::stringstream ss;
         ss << second->first_attribute("tex_se")->value();
         ss >> texSv;
-        
+
         ss << second->first_attribute("tex_en")->value();
         ss >> texEn;
-        
+
         ss << second->first_attribute("path")->value();
         ss >> catPath;
-        
+
         vecCat.push_back(Category(cName, texSv, texEn, catPath));
         catCard.push_back(std::vector<Card*>());
     }
-    
-    
+
+
     ///--------------MEDIA--------------///
     // accesing all media nodes
     for (rapidxml::xml_node<>* second = content->first_node("media"); second; second = second->next_sibling())
     {
         // writes out inforamtion about the media to the terminal and creates variables to use for creation of cards
-        
+
         std::string mediaPath = second->first_attribute("path")->value();
-        
+
         std::stringstream ss;
         int scaleExp;
         ss << second->first_attribute("scale_exp")->value();
         ss >> scaleExp;
-        
+
         std::vector<std::string> cardCat;
         std::string seHeader;
         std::string seText;
@@ -177,7 +178,7 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
         std::string enText;
         for (rapidxml::xml_node<>* inside = second->first_node(); inside ; inside = inside->next_sibling())
         {
-            
+
             std::string b = inside->name();
             if (b == "category")
             {
@@ -194,9 +195,9 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
                 enHeader = inside->first_node()->value() ;
                 enText = inside->first_node()->next_sibling()->value();
             }
-            
+
         }
-        
+
         // create card with variables
         glm::vec3 position = glm::vec3(rand() % rand() % (SCREEN_WIDTH /2) + (SCREEN_WIDTH /4),rand() % (SCREEN_HEIGHT /2) + (SCREEN_HEIGHT /4),0);
         glm::vec2 velocity;
@@ -218,15 +219,14 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
         {
             velocity = glm::vec2(-fact*(rand() % 4 + 1), -fact*(rand() % 4 + 1));
         }
-        
-        
+
+
         PhotoCard* newCard = new PhotoCard(cardCat, seHeader, seText, enHeader, enText, position, velocity, mediaPath, r);
-        //vecCard.push_back(newCard);
-        catCard[0].push_back(newCard); // Insert all cards in catCard[0]
-        
+        vecCard.push_back(newCard);
+
         // adding the card to categories vector
         for (int i = 0; i < cardCat.size(); i++) {
-            for (int j = 1; j < vecCat.size(); j++) { // j=1 because catCard[0] contains all cards
+            for (int j = 0; j < vecCat.size(); j++) {
                 if (vecCat[j].getCatName() == cardCat[i]) {
                     catCard[j].push_back(newCard);
                 }
@@ -244,12 +244,12 @@ void CardHandler::sort(){
 void CardHandler::renderMenu(SDL_Renderer* r)
 {
     SDL_Rect menuQuad = {50 , 640, 1100, 50 };
-    
+
     //SDL_RenderCopy( gRenderer, theTextures[texIndex], NULL, &renderQuad );
-    
+
     SDL_SetRenderDrawColor( r, 0x30, 0x30, 0x30, 0xCC );
     SDL_RenderFillRect( r, &menuQuad );
-    
+
     SDL_Rect edge = {50, 640, pixPerCat, 50 };
     SDL_SetRenderDrawColor( r, 0x00, 0x00, 0x30, 0xFF );
     SDL_RenderDrawRect(r, &edge);

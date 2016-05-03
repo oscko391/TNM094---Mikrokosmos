@@ -7,7 +7,7 @@
 #include "PhotoCard.h"
 #include "Category.h"
 
-#include "rapidxml.hpp"
+#include "rapidxml-1.13\rapidxml.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -15,34 +15,34 @@
 class CardHandler
 {
 private:
-    //std::vector<Card*> vecCard;
+    std::vector<Card*> vecCard;
     std::vector<Category> vecCat;
     std::vector<std::vector<Card*>> catCard;
     std::vector<Card*> currentCards;
-    
+
     std::vector<SDL_Event> frameEvents;
-    
+
     bool readXml(std::string filePath, SDL_Renderer* r);
-    
+
     bool menuEvent(SDL_Event* e);
     int pixPerCat; //1100/(vecCat.size() + 1);
-    
+
 public:
     CardHandler(std::string filePath, SDL_Renderer* r);
-    
-    std::vector<Card*> getCurrentCard();
+
+    std::vector<Card*> getVecCard();
     std::vector<Card*> getAll();
     std::vector<SDL_Event> getFrameEvents();
-    
+
     void addEvent(SDL_Event e);
-    
+
     void HandleEvents();
-    
+
     void sort();
-    
+
     void renderMenu(SDL_Renderer* r);
-    
-    
+
+
 };
 
 #endif // CARDHANDLER_H_INC
