@@ -6,7 +6,8 @@ Card::Card()
 }
 
 Card::Card(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath, SDL_Renderer* r)
-    : svHeader(inSvH)
+    : categories(inCat)
+    , svHeader(inSvH)
     , svText(inSvT)
     , enHeader(inEnH)
     , enText(inEnT)
@@ -284,6 +285,21 @@ std::string Card::getEnText()
 {
     return enText;
 }
+
+SDL_Texture* Card::getMainTextureEN() {
+    return enTextTexture;
+}
+
+SDL_Texture* Card::getCategoryTexture() {
+    return categoryTexture;
+}
+
+
+int Card::getLanguage()
+{
+    return language;
+}
+
 /*
 bool Card::getIsSwede()
 {
@@ -345,6 +361,9 @@ void Card::setVelocity(glm::vec2 inVel)
 {
     velocity = inVel;
 }
+
+
+
 /*
 void Card::changeLang()
 {
@@ -431,7 +450,8 @@ bool Card::load(SDL_Renderer* r){
         //Get rid of old surface
         SDL_FreeSurface( textSurface );
     }
-    	// main text
+
+    // main text
 	textColor = { 0, 0, 0};
 	textSurface = TTF_RenderText_Blended_Wrapped( gFont, svText.c_str(), textColor, 2000);
 	if( textSurface == NULL )
@@ -451,6 +471,61 @@ bool Card::load(SDL_Renderer* r){
 		//Get rid of old surface
 		SDL_FreeSurface( textSurface );
 	}
+
+	// english main text
+	textColor = { 255, 0, 0};
+	textSurface = TTF_RenderText_Blended_Wrapped( gFont, enText.c_str(), textColor, 2000);
+	if( textSurface == NULL )
+	{
+		printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+		success = false;
+	}
+	else
+	{
+		//Create texture from surface pixels
+        enTextTexture = SDL_CreateTextureFromSurface( r, textSurface );
+		if( textTexture == NULL )
+		{
+			printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+			success = false;
+		}
+		//Get rid of old surface
+		SDL_FreeSurface( textSurface );
+	}
+
+    // create categories texture
+	std::string temp=" ";
+
+	for (int i = 0; i < categories.size(); i++)
+    {
+        temp.append(categories[i]);
+        if (i < categories.size() - 1)
+            temp.append(" - ");
+    }
+
+	// category
+	textColor = { 255, 0, 0};
+	textSurface = TTF_RenderText_Blended_Wrapped( gFont, temp.c_str(), textColor, 2000);
+	if( textSurface == NULL )
+	{
+		printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+		success = false;
+	}
+	else
+	{
+		//Create texture from surface pixels
+        categoryTexture = SDL_CreateTextureFromSurface( r, textSurface );
+		if( categoryTexture == NULL )
+		{
+			printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+			success = false;
+		}
+		//Get rid of old surface
+		SDL_FreeSurface( textSurface );
+	}
+
+
+
 
 
     TTF_CloseFont( gFont );

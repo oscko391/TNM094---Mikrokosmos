@@ -95,7 +95,7 @@ void PhotoCard::render( SDL_Renderer* gRenderer) // Blir error atm
         h / SCALEFACTOR};
     int xoffset = (getWidth() - w/SCALEFACTOR) / 2; //centrerar text
     headingQuad.x += xoffset;
-    int yoffset = (headQuad.h - h / SCALEFACTOR) / 2;
+    int yoffset = (headQuad.h - h /SCALEFACTOR) / 2;
     headingQuad.y += yoffset;
 
     if (getReading()) {
@@ -132,11 +132,103 @@ void PhotoCard::render( SDL_Renderer* gRenderer) // Blir error atm
         headQuad.y += h * 2/SCALEFACTOR;
         headQuad.x += 5;
         headQuad.h = headQuad.w / aspectRatio;
-        // TODO: Add SDL_SetClipRect i samma storleksom det vita rammen. Kräver Surface
-        SDL_RenderCopyEx(gRenderer, getMainTexture(), NULL, &headQuad, 0, NULL, SDL_FLIP_NONE); //ritar brödtexten
+
+
+        if (getLanguage() == SWEDISH)
+        {
+            // TODO: Add SDL_SetClipRect i samma storleksom det vita rammen. Kräver Surface
+            SDL_RenderCopyEx(gRenderer, getMainTexture(), NULL, &headQuad, 0, NULL, SDL_FLIP_NONE); //ritar brödtexten
+        }
+        else if (getLanguage() == ENGLISH)
+        {
+            SDL_RenderCopyEx(gRenderer, getMainTextureEN(), NULL, &headQuad, 0, NULL, SDL_FLIP_NONE); //ritar brödtexten
+        }
+
+        SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
+        SDL_RenderDrawLine(gRenderer,
+                           static_cast<int>(getPos().x) + getWidth()/20 ,
+                           static_cast<int>(getPos().y) + getWidth()/10,
+                           static_cast<int>(getPos().x) + getWidth() - getWidth()/16 ,
+                           static_cast<int>(getPos().y) + getWidth()/10);
+
+        SDL_RenderDrawLine(gRenderer,
+                           static_cast<int>(getPos().x) + getWidth()/20 ,
+                           static_cast<int>(getPos().y) + getWidth()/9,
+                           static_cast<int>(getPos().x) + getWidth() - getWidth()/16 ,
+                           static_cast<int>(getPos().y) + getWidth()/9);
+
+
+
+         //SDL_Rect catergoriesQuad = {static_cast<int>(getPos().x) , static_cast<int>(getPos().y), getWidth(), getHeight() };
+        // SDL_RenderCopyEx(gRenderer, getCategoryTexture(), NULL, &catergoriesQuad, 0, NULL, SDL_FLIP_NONE);
 
     }
 }
+
+/*
+SDL_Texture* PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
+{
+    //The final texture
+    SDL_Texture* imgTexture = NULL;
+
+    //Load image at specified path
+    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    if( loadedSurface == NULL )
+    {
+        printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+    }
+    else
+    {
+        //Create texture from surface pixels
+        imgTexture = SDL_CreateTextureFromSurface( r, loadedSurface );
+        if( imgTexture == NULL )
+        {
+            printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+        }
+
+        //Get rid of old loaded surface
+        SDL_FreeSurface( loadedSurface );
+    }
+    int w, h;
+    SDL_QueryTexture(imgTexture, NULL, NULL, &w, &h);
+
+    SDL_Texture* newTexture = SDL_CreateTexture( r, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w + w/25 , h + w/25 );
+    SDL_SetRenderTarget( r, newTexture );
+
+    SDL_SetRenderDrawColor( r, 0xEE, 0xEE, 0xEE, 0xFF );
+    SDL_RenderFillRect( r , NULL );
+
+    SDL_Rect renderQuad = {w/50 , w/50, w, h };
+    SDL_RenderCopyEx( r, imgTexture , NULL, &renderQuad, NULL, NULL, SDL_FLIP_NONE );
+
+    int header_w, header_h;
+    SDL_QueryTexture(getHeader(), NULL, NULL, &header_w, &header_h);
+    double f = 1.0;
+    if (header_w > w - w/25) {
+        f = (w - w/25)/static_cast<double>(header_w);;
+        header_w *= f;
+        header_h *= f;
+    }
+    if (header_h > w / 10) {
+        f = (w / 10)/static_cast<double>(header_h);;
+        header_w *= f;
+        header_h *= f;
+    }
+    int smaller_w = ((w - w/25) - header_w)/2;
+    int smaller_h = ((w/10) - header_h)/2;
+
+    SDL_Rect headQuad = {w/25, w/25  , w - w/25  , w / 10};
+    SDL_SetRenderDrawColor( r, 0xDD, 0xDD, 0xDD, 0xCC );
+    SDL_RenderFillRect( r, &headQuad );
+
+    headQuad = {w/25 + smaller_w, w/25 + smaller_h , static_cast<int>(header_w)  , static_cast<int>(header_h)};
+    SDL_RenderCopyEx(r, getHeader(), NULL, &headQuad, 0, NULL, SDL_FLIP_NONE);
+
+    SDL_SetRenderTarget( r, NULL );
+
+    return newTexture;
+}
+*/
 
 SDL_Texture* PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
 {

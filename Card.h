@@ -16,6 +16,8 @@
 const int SCREEN_WIDTH = 1200; // Flyttas till main sen?
 const int SCREEN_HEIGHT = 700;
 
+const int SWEDISH = 0;  // detta möjliggör mer än 2 språk i framtiden om mna vill
+const int ENGLISH = 1;
 
 class Card
 {
@@ -31,7 +33,10 @@ private:
     std::string enHeader;
     std::string enText;
     SDL_Texture *textTexture;
+    SDL_Texture *enTextTexture;
+    SDL_Texture *categoryTexture;
     //bool isSwede = true; // limiting us to 2 languages
+    int language = ENGLISH;
     glm::vec3 pos;
     glm::vec2 velocity;
     std::string path;
@@ -78,8 +83,11 @@ public:
     bool getReading();
     SDL_Texture* getHeader();
     SDL_Texture* getMainTexture();
+    SDL_Texture* getMainTextureEN();
+    SDL_Texture* getCategoryTexture();
 
     //bool getIsSwede();
+    int getLanguage();
     glm::vec3 getPos();
     glm::vec2 getVelocity();
 
