@@ -1,13 +1,13 @@
 <content>
 	<!-- CATEGORIES -->
-    <category name="all" tex_se="Alla kort" tex_en="All cards" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/> <!-- All categorys! -->
-    <category name="protein" tex_se="Proteiner" tex_en="Proteins" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
-    <category name="virus" tex_se="Virus" tex_en="Viruses" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
-    <category name="cell" tex_se="Celler" tex_en="Cells" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
-    <category name="gener" tex_se="Gener" tex_en="Genes" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
-    <category name="molekyler" tex_se="Molekyler" tex_en="Molecules" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
-    <category name="livsproseccer" tex_se="Livsproseccer" tex_en="Life Processes" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
-    <category name="sjukdomar" tex_se="Sjukdomar" tex_en="Diseases" path="/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/rotate.png"/>
+    <category name="all" tex_se="Alla kort" tex_en="All cards" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/> <!-- All categorys! -->
+    <category name="protein" tex_se="Proteiner" tex_en="Proteins" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/>
+    <category name="virus" tex_se="Virus" tex_en="Viruses" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/>
+    <category name="cell" tex_se="Celler" tex_en="Cells" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/>
+    <category name="gener" tex_se="Gener" tex_en="Genes" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/>
+    <category name="molekyler" tex_se="Molekyler" tex_en="Molecules" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/>
+    <category name="livsproseccer" tex_se="Livsproseccer" tex_en="Life Processes" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/>
+    <category name="sjukdomar" tex_se="Sjukdomar" tex_en="Diseases" path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/00.jpg"/>
 
 
 	<!-- MEDIA -->
@@ -49,7 +49,7 @@
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3">
+    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/03.jpg" scale_exp="-3" >
         <category name="sjukdomar" />
         <category name="virus" />
         <se>
@@ -61,7 +61,7 @@
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
     </media>
-    <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
+    <!--<media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/04.jpg" scale_exp="-3">
         <category name="livsproseccer" />
         <se>
             <header>Växtvirus</header>
@@ -152,6 +152,6 @@
             <header>Plant virus</header>
             <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
         </en>
-    </media>
+    </media>-->
 
 </content>

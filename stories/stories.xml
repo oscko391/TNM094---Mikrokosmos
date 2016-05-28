@@ -1,0 +1,187 @@
+<content>
+    <!-- How to get ŒŠš:
+     Œ = å
+     Š = ä
+     š = ö  … =
+     åäö
+     -->
+    
+    <!-- STORYS -->
+    <story tex_se="Om Mikrokosmos" tex_en="About Microcosmos">
+        
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/raket2_big.jpg">
+            <se>
+                <header>Mikrokosmos</header>
+                <text>Vad är mikrokosmos? Har det något att göra med rymden och ska vi ut bland stjärnorna? Nej, det handlar om saker som är väldigt små. Så små att vi inte kan se dem. Mikrokosmos handlar om celler, molekyler och andra små saker som flyter omkring i våra kroppar.</text>
+            </se>
+            <en>
+                <header>Microcosmos</header>
+                <text>A</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/430.jpg"> <!-- "story_media/what.jpg" -->
+            <se>
+                <header>Mikrokosmos 1.0</header>
+                <text>Detta var det första vi frågade oss när vi fått veta vad just vårt kandidatprojekt skulle vara.</text>
+            </se>
+            <en>
+                <header>Microcosmos 1.0</header>
+                <text>This was the first question everyone asked themselvs when we found out what our project would be.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/bild1.png"> <!-- "story_media/what.jpg" -->
+            <se>
+                <header>Design</header>
+                <text>Detta var det första vi frågade oss när vi fått veta vad just vårt kandidatprojekt skulle vara.</text>
+            </se>
+            <en>
+                <header>Design</header>
+                <text>This was the first question everyone asked themselvs when we found out what our project would be.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/bild2.png"> <!-- "story_media/what.jpg" -->
+            <se>
+                <header>Design</header>
+                <text>Detta var det första vi frågade oss när vi fått veta vad just vårt kandidatprojekt skulle vara.</text>
+            </se>
+            <en>
+                <header>Design</header>
+                <text>This was the first question everyone asked themselvs when we found out what our project would be.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/cards_all.png"> <!-- "story_media/what.jpg" -->
+            <se>
+                <header>Vision</header>
+                <text>Detta var det första vi frågade oss när vi fått veta vad just vårt kandidatprojekt skulle vara.</text>
+            </se>
+            <en>
+                <header>Vision</header>
+                <text>This was the first question everyone asked themselvs when we found out what our project would be.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/cards_type4_scale.png"> <!-- "story_media/what.jpg" -->
+            <se>
+                <header>Vision</header>
+                <text>Detta var det första vi frågade oss när vi fått veta vad just vårt kandidatprojekt skulle vara.</text>
+            </se>
+            <en>
+                <header>Vision</header>
+                <text>This was the first question everyone asked themselvs when we found out what our project would be.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/cards_type4_scale_info.png"> <!-- "story_media/what.jpg" -->
+            <se>
+                <header>Vision</header>
+                <text>Detta var det första vi frågade oss när vi fått veta vad just vårt kandidatprojekt skulle vara.</text>
+            </se>
+            <en>
+                <header>Vision</header>
+                <text>This was the first question everyone asked themselvs when we found out what our project would be.</text>
+            </en>
+        </media>
+        
+    </story>
+    
+    <story tex_se="Namn" tex_en="Name">
+        
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/brain.jpg">
+            <se>
+                <header>Rubrik 1</header>
+                <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+            </se>
+            <en>
+                <header>Header 1</header>
+                <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/blood.jpg">
+            <se>
+                <header>Rubrik 2</header>
+                <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+            </se>
+            <en>
+                <header>Header 2</header>
+                <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/Virus HIV che invadono una cellula.jpg">
+            <se>
+                <header>Rubrik 3</header>
+                <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+            </se>
+            <en>
+                <header>Header 3</header>
+                <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu velit non nisl dignissim gravida.</text>
+            </en>
+        </media>
+        
+    </story>
+    
+    <story tex_se="Om Mikrokosmos" tex_en="About Microcosmos">
+        
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/raket2_big.jpg">
+            <se>
+                <header>Mikrokosmos</header>
+                <text>Vad är mikrokosmos? Har det något att göra med rymden och ska vi ut bland stjärnorna? Nej, det handlar om saker som är väldigt små. Så små att vi inte kan se dem. Mikrokosmos handlar om celler, molekyler och andra små saker som flyter omkring i våra kroppar.</text>
+            </se>
+            <en>
+                <header>Microcosmos</header>
+                <text>A</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/05.png"> <!-- "story_media/what.jpg" -->
+            <se>
+                <header>Vad är det här?</header>
+                <text>Detta var det första vi frågade oss när vi fått veta vad just vårt kandidatprojekt skulle vara.</text>
+            </se>
+            <en>
+                <header>What is this?</header>
+                <text>This was the first question everyone asked themselvs when we found out what our project would be.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/06.png"> <!-- "story_media/fieldtrip.jpg" -->
+            <se>
+                <header>Utflykt till C</header>
+                <text>Då alla i gruppen hade olika uppfattningar om vilket touchbord det var vi skulle uppdatera, var det passande med en liten utflykt till Visualiseringscenter C.</text>
+            </se>
+            <en>
+                <header>Fieldtrip to C</header>
+                <text>Because everyone in the group had different thoughts about which touchboard we were supposed to update, we decided to go on a little fieldtrip to the Visualization Center C.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/07.png"> <!-- "story_media/test_annimals.jpg" -->
+            <se>
+                <header>Arbetet</header>
+                <text>Vi har tagit oss från en halvfärdig applikation med flytande vykort på grisar...</text>
+            </se>
+            <en>
+                <header>The work</header>
+                <text>We have gone from having a half finished application with floating cards of pigs...</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/400.jpg"> <!-- "story_media/fet_arm.png" -->
+            <se>
+                <header>A</header>
+                <text>...till en halvfärdig applikation med flytande vykort som innehåller de riktiga bilderna vi fått från kunden.</text>
+            </se>
+            <en>
+                <header>A</header>
+                <text>...to a half finished application with floating cards of the real pictures from the client.</text>
+            </en>
+        </media>
+        <media path="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/430.jpg"> <!-- story_media/design_guide.png -->
+            <se>
+                <header>Berättelser för guider och besökare</header>
+                <text>Detta har varit en rolig upplevelse... Kunden säger en sak, ansvarig pedagog på C säger en annan. Kunden pratar med pedagog och kunden får exakt som kunden vill. Jippi, mer jobb för oss!</text>
+            </se>
+            <en>
+                <header>A</header>
+                <text>This have been a fun experience... The client says one thing, the head teacher at C says another. The client talks to the head teacher and the client gets exactly what the client wants. Yaay, more work for us!</text>
+            </en>
+        </media>
+        
+    </story>
+    
+    
+
+</content>

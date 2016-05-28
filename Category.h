@@ -19,7 +19,7 @@ private:
     std::string textSv;
     std::string textEn;
     std::string catPath; // path to the image who belongs to the category
-
+    
     
 public:
     //constructors

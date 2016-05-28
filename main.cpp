@@ -13,12 +13,15 @@
 #include <algorithm>
 #include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 
-
 #include "rapidxml.hpp" // mac: add to project, windows: add headers to lib and refrence with < >
+
+#include "settings.h"
 #include "Card.h"
 #include "PhotoCard.h"
+#include "StoryCard.h"
 #include "CardHandler.h"
 
+bool readXml(std::string filePath, std::vector<Card*> &vecCard);
 SDL_Texture* loadingT(std::string path);
 bool initWindow();
 void close();
@@ -32,37 +35,57 @@ SDL_Renderer* gRenderer = NULL;
 //const int SCREEN_WIDTH = 1200;
 //const int SCREEN_HEIGHT = 800;
 int Card::infoIndexGenerator = 0;
-std::vector<SDL_Texture*> Card::headers;
+std::vector<SDL_Texture*> Card::headersSv;
+std::vector<SDL_Texture*> Card::headersEn;
+std::vector<SDL_Texture*> Card::infoTextSv;
+std::vector<SDL_Texture*> Card::infoTextEn;
+std::vector<SDL_Texture*> Card::catTextSv;
+std::vector<SDL_Texture*> Card::catTextEn;
 
 int PhotoCard::tex_generator = 0;
-std::vector<SDL_Texture*> PhotoCard::theTextures;
+std::vector<SDL_Texture*> PhotoCard::headSv;
+std::vector<SDL_Texture*> PhotoCard::headEn;
+std::vector<SDL_Texture*> PhotoCard::readSv;
+std::vector<SDL_Texture*> PhotoCard::readEn;
 
+int StoryCard::tex_generator = 0;
+std::vector<SDL_Texture*> StoryCard::image;
+std::vector<SDL_Texture*> StoryCard::swedish;
+std::vector<SDL_Texture*> StoryCard::english;
+
+SDL_Texture* Card::shadow = NULL;
+SDL_Texture* Card::arrow = NULL;
 
 int main(int argc, char*args[])
 {
-    //std::vector<Card*> theCards;
+    bool isSwedish = true;
     
     // initiation of the cards, read the xml-file and save cards to theCards
     //std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/mediaTest.xml"; // change to correct path
-    
-    std::string xmlPath = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/demo/mediaTest.xml";
+    //std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/media/write.xml"; // change to correct path
+    //std::string xmlPath = "C:/Users/Oscar/media/write.xml"; // change to correct path
+    std::string xmlPath = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/media/write.xml"; // change to correct path
+
+    //std::string xmlStory = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/stories/stories.xml"; // change to correct path
+    std::string xmlStory = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/stories.xml"; // change to correct path
 
     
-    //readXml(xmlPath, theCards);
-    //std::vector<SDL_Texture*> theTextures(theCards.size());
     
     
-    clock_t startClock = clock();
+    
+    clock_t startClock;
     if (!initWindow()) {
         printf("Failed the window \n");
     }
     else {
-        CardHandler ch = CardHandler(xmlPath, gRenderer);
-        //readXml(xmlPath, theCards);
+        SDL_SetWindowFullscreen(gWindow,SDL_WINDOW_FULLSCREEN);
+        std::cout << " testing " << std::endl;
+        CardHandler ch = CardHandler(xmlPath, xmlStory, gRenderer);
         bool quit = false;
         SDL_Event e;
         
         startClock = clock();
+        float time;
         while (!quit) {
             //Handle events on queue
             while( SDL_PollEvent( &e ) != 0 )
@@ -73,49 +96,28 @@ int main(int argc, char*args[])
                     quit = true;
                 }
                 
-                //Handle button events
-                //for(int i = theCards.size(); i >= 0; i-- )
-                //{
-                //    if (theCards[i]->handleEvent( &e ))
-                //    {
-                //        break;
-                //    }
-                //}
                 ch.addEvent(e);
                 
             }
-            /*if( e.type == SDL_QUIT )
-             {
-             quit = true;
-             }*/
-
             
-            ch.HandleEvents();
+            ch.HandleEvents(isSwedish);
+            
             // begin render
             //Clear screen
-            SDL_SetRenderDrawColor( gRenderer, 0x61, 0x62, 0x60, 0xFF);
-//            SDL_SetRenderDrawColor( gRenderer, 0x11, 0x22, 0x55, 0xFF);
-
-
-            SDL_SetRenderDrawColor( gRenderer, 0x11, 0x22, 0x55, 0xFF);
-
+            SDL_SetRenderDrawColor( gRenderer, 0x15, 0x15, 0x10, 0xFF);
             SDL_RenderClear( gRenderer );
-            float time = clock() - startClock;
-            //time = 100*time/CLOCKS_PER_SEC;
+            time = clock() - startClock;
+            
             time = time/CLOCKS_PER_SEC;
+            ch.changeCat(time);
             startClock = clock();
-            ch.sort();
-            for (int i = ch.getCurrentCard().size() - 1; i >= 0; i--) {
-                if (ch.getCurrentCard()[i]->getLifeTime() < clock()) {
-                    ch.getCurrentCard()[i]->move(time);
-                }
-                ch.getCurrentCard()[i]->render(gRenderer); // theTextures[theCards[i].texIndex]
-            }
-            ch.renderMenu(gRenderer);
+            
+            ch.render(gRenderer, isSwedish);
+            
             //Update screen
             SDL_RenderPresent( gRenderer );
             // end of render
-            ch.getFrameEvents().clear();
+            ch.clearEvents();
         }
     }
     
@@ -123,7 +125,6 @@ int main(int argc, char*args[])
     
     return 0;
 }
-
 
 
 SDL_Texture* loadingT(std::string path)
@@ -222,4 +223,5 @@ void close()
     //Quit SDL subsystems
     IMG_Quit();
     SDL_Quit();
+    TTF_Quit();
 }

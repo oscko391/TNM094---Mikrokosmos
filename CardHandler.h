@@ -5,42 +5,60 @@
 
 #include "Card.h"
 #include "PhotoCard.h"
+#include "StoryHandler.h"
 #include "Category.h"
+#include "Menu.h"
 
 #include "rapidxml.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
+
 
 class CardHandler
 {
 private:
-    //std::vector<Card*> vecCard;
+    // variables
+    std::vector<SDL_Event> frameEvents;
+    Menu theMenu;
+    float addedTime; // change category when home and change back to home when story
+    
+    // home
     std::vector<Category> vecCat;
     std::vector<std::vector<Card*>> catCard;
     std::vector<Card*> currentCards;
     
-    std::vector<SDL_Event> frameEvents;
+    // story
+    bool isStory;
+    StoryHandler allStories;
+    std::vector<std::string> swedishNames;
+    std::vector<std::string> englishNames;
     
+    
+    // init for cards and
     bool readXml(std::string filePath, SDL_Renderer* r);
-    
-    bool menuEvent(SDL_Event* e);
-    int pixPerCat; //1100/(vecCat.size() + 1);
+    bool readStoryXml(std::string filePath, SDL_Renderer* r);
     
 public:
-    CardHandler(std::string filePath, SDL_Renderer* r);
+    CardHandler(std::string mediaPath, std::string storyPath, SDL_Renderer* r);
     
     std::vector<Card*> getCurrentCard();
     std::vector<Card*> getAll();
     std::vector<SDL_Event> getFrameEvents();
+    Menu getMenu();
     
     void addEvent(SDL_Event e);
     
-    void HandleEvents();
+    void HandleEvents(bool &lang);
+    void changeCat(float t);
     
     void sort();
     
-    void renderMenu(SDL_Renderer* r);
+    void render(SDL_Renderer* r, bool swede);
+    
+    void clearEvents();
     
     
 };

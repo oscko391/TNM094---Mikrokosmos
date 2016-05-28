@@ -24,7 +24,7 @@ Category::Category(std::string name, std::string texSv, std::string texEn, std::
 // Destructor
 Category::~Category()
 {
-
+    
 }
 
 // Getters

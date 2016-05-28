@@ -1,10 +1,14 @@
 #include "CardHandler.h"
 
-CardHandler::CardHandler(std::string filePath, SDL_Renderer* r)
+CardHandler::CardHandler(std::string mediaPath, std::string storyPath, SDL_Renderer* r)
+:allStories(StoryHandler(r))
 {
-    readXml(filePath, r);
+    readXml(mediaPath, r);
     currentCards = catCard[0];
-    pixPerCat = 1100/(vecCat.size() + 1);
+    allStories.readXml(storyPath, r, swedishNames, englishNames);
+    theMenu = Menu(35, r, vecCat, swedishNames, englishNames);
+    addedTime = 2.0;
+    isStory = false;
 }
 
 std::vector<Card*> CardHandler::getCurrentCard()
@@ -17,79 +21,38 @@ std::vector<Card*> CardHandler::getAll()
     return catCard[0];
 }
 
-// loops over all the cards and then loops over all the events and handles them
-void CardHandler::HandleEvents()
+Menu CardHandler::getMenu()
 {
-    /*for (int indi = 0; indi < frameEvents.size(); indi++)
-    {
-        if (menuEvent(&frameEvents[indi])) {
-            frameEvents.erase(frameEvents.begin() + indi);
-        }
-        else {
-            for (int indo = 0; indo < currentCards.size(); indo++)
-            {
-                //removing an event if used so only one card can be affected by a specific event
-                if(currentCards[indo]->handleEvent(&frameEvents[indi]))
-                    frameEvents.erase(frameEvents.begin() + indi);
-            }
-        }
-    }*/
+    return theMenu;
+}
+
+// loops over all the cards and then loops over all the events and handles them
+void CardHandler::HandleEvents(bool &lang)
+{
     
     for (int indo = 0; indo < currentCards.size(); indo++)
     {
         for (int indi = 0; indi < frameEvents.size(); indi++) {
             //removing an event if used so only one card can be affected by a specific event
-            if(currentCards[indo]->handleEvent(&frameEvents[indi]))
+            if (theMenu.handleEvent(&frameEvents[indi], lang, isStory, allStories.getFlipp())) {
+                currentCards = catCard[theMenu.getCat()];
+                allStories.setStory(theMenu.getStory());
                 frameEvents.erase(frameEvents.begin() + indi);
-            else if (menuEvent(&frameEvents[indi])) {
-                frameEvents.erase(frameEvents.begin() + indi);
+                addedTime = 2.0;
             }
+            else if(!isStory && currentCards[indo]->handleEvent(&frameEvents[indi])) {
+                frameEvents.erase(frameEvents.begin() + indi);
+                addedTime = 2.0;
+            }
+            else if (isStory && allStories.handleEvent(&frameEvents[indi])) {
+                frameEvents.erase(frameEvents.begin() + indi);
+                addedTime = 2.0;
+            }
+            
         }
     }
 }
 
-bool CardHandler::menuEvent(SDL_Event* e){
-    // SDL_Rect menuQuad = {x , y, 1100, 50 };
-    if (e->type == SDL_MOUSEBUTTONDOWN ) {
-        //int pixPerCat = 1100/(vecCat.size() + 1);
-        int p = 50 + pixPerCat;
-        int x, y;
-        SDL_GetMouseState( &x, &y );
-        if (x > 50 && x < 1150 && y > 640 && y < 690) {
-            if (x < p) {
-                currentCards = catCard[0];
-                return true;
-            }
-            for (int i = 0; i < vecCat.size(); i++) {
-                p += pixPerCat;
-                if (x < p) {
-                    currentCards = catCard[i];
-                    return true;
-                }
-            }
-        }
-    }
-    if (e->type == SDL_FINGERDOWN ) {
-        //int pixPerCat = 1100/(vecCat.size() + 1);
-        int p = 50 + pixPerCat;
-        int x = e->tfinger.x * SCREEN_WIDTH;
-        int y = e->tfinger.y * SCREEN_HEIGHT;
-        if (x > 50 && x < 1150 && y > 640 && y < 690) {
-            if (x < p) {
-                currentCards = catCard[0];
-                return true;
-            }
-            for (int i = 0; i < vecCat.size(); i++) {
-                p += pixPerCat;
-                if (x < p) {
-                    currentCards = catCard[i];
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
 
 
 std::vector<SDL_Event> CardHandler::getFrameEvents()
@@ -142,15 +105,17 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
         std::string texEn;
         std::string catPath;
         
-        std::stringstream ss;
-        ss << second->first_attribute("tex_se")->value();
-        ss >> texSv;
+        std::stringstream ss1;
+        std::stringstream ss2;
+        std::stringstream ss3;
+        ss1 << second->first_attribute("tex_se")->value();
+        getline( ss1, texSv);
         
-        ss << second->first_attribute("tex_en")->value();
-        ss >> texEn;
+        ss2 << second->first_attribute("tex_en")->value();
+        getline( ss2, texEn);
         
-        ss << second->first_attribute("path")->value();
-        ss >> catPath;
+        ss3 << second->first_attribute("path")->value();
+        ss3 >> catPath;
         
         vecCat.push_back(Category(cName, texSv, texEn, catPath));
         catCard.push_back(std::vector<Card*>());
@@ -175,6 +140,8 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
         std::string seText;
         std::string enHeader;
         std::string enText;
+        std::stringstream sSv;
+        std::stringstream sEn;
         for (rapidxml::xml_node<>* inside = second->first_node(); inside ; inside = inside->next_sibling())
         {
             
@@ -187,12 +154,26 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
             else if (b == "se")
             {
                 seHeader = inside->first_node()->value() ;
-                seText = inside->first_node()->next_sibling()->value();
+                
+                sSv << inside->first_node()->next_sibling()->value();
+                std::string get;
+                getline(sSv, get);
+                seText.append(get);
+                seText.append("\n\n");
+                getline(sSv, get);
+                seText.append(get);
             }
             else
             {
                 enHeader = inside->first_node()->value() ;
-                enText = inside->first_node()->next_sibling()->value();
+                
+                sEn << inside->first_node()->next_sibling()->value();
+                std::string get;
+                getline(sEn, get);
+                enText.append(get);
+                enText.append("\n\n");
+                getline(sEn, get);
+                enText.append(get);
             }
             
         }
@@ -221,12 +202,11 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
         
         
         PhotoCard* newCard = new PhotoCard(cardCat, seHeader, seText, enHeader, enText, position, velocity, mediaPath, r);
-        //vecCard.push_back(newCard);
-        catCard[0].push_back(newCard); // Insert all cards in catCard[0]
+        //catCard[0].push_back(newCard); // Insert all cards in catCard[0]
         
         // adding the card to categories vector
         for (int i = 0; i < cardCat.size(); i++) {
-            for (int j = 1; j < vecCat.size(); j++) { // j=1 because catCard[0] contains all cards
+            for (int j = 0; j < vecCat.size(); j++) { // j=1 because catCard[0] contains all cards
                 if (vecCat[j].getCatName() == cardCat[i]) {
                     catCard[j].push_back(newCard);
                 }
@@ -236,25 +216,45 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
     return true;
 }
 
+
+void CardHandler::changeCat(float t) {
+    
+    addedTime += t;
+    
+    if (static_cast<int>(addedTime)%20 == 0) {
+        isStory = false;
+        theMenu.changeCategory();
+        currentCards = catCard[theMenu.getCat()];
+        allStories.setStory(0);
+        addedTime = 2.0;
+    }
+}
+
 bool compCard( Card* a,  Card* b) {return a->getLifeTime() > b->getLifeTime(); }
 void CardHandler::sort(){
     std::sort(currentCards.begin(), currentCards.end(), compCard);
 }
 
-void CardHandler::renderMenu(SDL_Renderer* r)
-{
-    SDL_Rect menuQuad = {50 , 640, 1100, 50 };
-    
-    //SDL_RenderCopy( gRenderer, theTextures[texIndex], NULL, &renderQuad );
-    
-    SDL_SetRenderDrawColor( r, 0x30, 0x30, 0x30, 0xCC );
-    SDL_RenderFillRect( r, &menuQuad );
-    
-    SDL_Rect edge = {50, 640, pixPerCat, 50 };
-    SDL_SetRenderDrawColor( r, 0x00, 0x00, 0x30, 0xFF );
-    SDL_RenderDrawRect(r, &edge);
-    for (int i = 0; i < vecCat.size(); i++) {
-        edge = {51 + i + pixPerCat*(i+1), 640, pixPerCat, 50 };
-        SDL_RenderDrawRect(r, &edge);
+void CardHandler::render(SDL_Renderer* r, bool swede) {
+    if (!isStory) {
+        sort();
+        for (int i = currentCards.size() - 1; i >= 0; i--) {
+            if (currentCards[i]->getLifeTime() < clock()) {
+                currentCards[i]->move(0.001); // (start - clock())/(CLOCKS_PER_SEC*2)
+            }
+            currentCards[i]->render(r, swede); // theTextures[theCards[i].texIndex]
+        }
     }
+    else {
+        allStories.render(r, swede);
+    }
+    
+    theMenu.renderMenu(r, swede, isStory);
+    
+}
+
+
+void CardHandler::clearEvents()
+{
+    frameEvents.clear();
 }
