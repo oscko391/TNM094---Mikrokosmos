@@ -41,6 +41,8 @@ private:
     bool readXml(std::string filePath, SDL_Renderer* r);
     bool readStoryXml(std::string filePath, SDL_Renderer* r);
     
+    //settings
+    bool readXmlSettings(std::string filePath, SDL_Renderer* r);
 public:
     CardHandler(std::string mediaPath, std::string storyPath, SDL_Renderer* r);
     
@@ -59,7 +61,8 @@ public:
     void render(SDL_Renderer* r, bool swede);
     
     void clearEvents();
-    
+
+    unsigned int backgorundColor [4]; //Reed from the XMLfile settings.xml
     
 };
 

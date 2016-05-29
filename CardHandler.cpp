@@ -217,6 +217,69 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
 }
 
 
+
+bool CardHandler::readXmlSettings(std::string filePath, SDL_Renderer* r)
+{
+    std::cout << "xml" << std::endl;
+    // getting the string through an ifstream
+    std::ifstream ifs(filePath, std::ios::in);
+    if(!ifs.is_open())
+    {
+        return false;
+    }
+    
+    // making it the right format (char) for the parsing to xml doc
+    std::string xml_str;
+    xml_str.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+    
+    // creating a xml_document and parsing the xml-file, making a DOM-tree
+    rapidxml::xml_document<> doc;
+    try
+    {
+        doc.parse<0>((char*)xml_str.c_str());
+    }
+    catch (...)
+    {
+        return false;
+    }
+    
+    
+    // accesing the first node in the file
+    rapidxml::xml_node<>* content = doc.first_node("content");
+    
+    ///-------SETTINGS------------///
+    for (rapidxml::xml_node<>* second = content->first_node("CardHandler"); second <= content->last_node("CardHandler"); second = second->next_sibling())
+    {
+        // Backgorundcolors
+        unsigned int bColorR;
+        std::stringstream sR;
+        sR << std::hex << second->first_attribute("background_color_r")->value();
+        sR >> std::hex  >> bColorR;
+        backgorundColor[0] = bColorR;
+        
+        unsigned int bColorG;
+        std::stringstream sG;
+        sG << std::hex << second->first_attribute("background_color_g")->value();
+        sG >> std::hex >> bColorG;
+        backgorundColor[1] = bColorG;
+        
+        unsigned int bColorB;
+        std::stringstream sB;
+        sB << std::hex << second->first_attribute("background_color_b")->value();
+        sB >> std::hex >> bColorB;
+        backgorundColor[2] = bColorB;
+        
+        unsigned int   bColorA;
+        std::stringstream sA;
+        sA << std::hex << second->first_attribute("background_color_a")->value() << std::hex;
+        sA >> std::hex >>bColorA;
+        backgorundColor[3] = bColorA;
+    }
+    
+    return true;
+} //------
+
+
 void CardHandler::changeCat(float t) {
     
     addedTime += t;

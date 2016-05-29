@@ -27,6 +27,9 @@ bool initWindow();
 void close();
 
 bool sorting( Card* a,  Card* b) {return a->getLifeTime() < b->getLifeTime(); }
+std::string pathToFiles ="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos"; //change for specific computer
+//std::string pathToFiles ="/Users/my/Documents/LiU/Kandidat/SDL_tutorial"; //change for specific computer
+//std::string pathToFiles ="C:/Users/Oscar"; //change for specific computer
 
 
 // global window and renderer to the window
@@ -61,16 +64,12 @@ int main(int argc, char*args[])
     bool isSwedish = true;
     
     // initiation of the cards, read the xml-file and save cards to theCards
-    //std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/demo/mediaTest.xml"; // change to correct path
-    //std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/media/write.xml"; // change to correct path
-    //std::string xmlPath = "C:/Users/Oscar/media/write.xml"; // change to correct path
-    std::string xmlPath = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/media/write.xml"; // change to correct path
-
-    //std::string xmlStory = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/stories/stories.xml"; // change to correct path
-    std::string xmlStory = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/stories.xml"; // change to correct path
-
+/*    std::string xmlPath1 = pathToFiles + "/media/write.xml";
+    std::string xmlStory1 = pathToFiles + "/stories/stories.xml";
+    std::cout << "1 " << xmlPath1 << std::endl;*/
     
-    
+    std::string xmlPath = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/media/write.xml";
+    std::string xmlStory = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/stories.xml";
     
     
     clock_t startClock;
@@ -104,7 +103,7 @@ int main(int argc, char*args[])
             
             // begin render
             //Clear screen
-            SDL_SetRenderDrawColor( gRenderer, 0x15, 0x15, 0x10, 0xFF);
+            SDL_SetRenderDrawColor( gRenderer, ch.backgorundColor[0], ch.backgorundColor[1], ch.backgorundColor[2], ch.backgorundColor[3]); // Backgroundcolor generated from xml-file
             SDL_RenderClear( gRenderer );
             time = clock() - startClock;
             
@@ -125,6 +124,7 @@ int main(int argc, char*args[])
     
     return 0;
 }
+
 
 
 SDL_Texture* loadingT(std::string path)
