@@ -15,7 +15,7 @@ StoryCard::StoryCard()
 }
 
 StoryCard::StoryCard(std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, std::string textPath, SDL_Renderer* r)
-: Card(std::vector<std::string>(), inSvH, inSvT, inEnH, inEnT, glm::vec3(), glm::vec2(), textPath, r)
+: Card(std::vector<std::string>(), std::vector<std::string>(), inSvH, inSvT, inEnH, inEnT, glm::vec3(), glm::vec2(), textPath, r)
 {
     texIndex = tex_generator++;
     loadingTex(r, textPath);
