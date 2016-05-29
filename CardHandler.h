@@ -37,33 +37,33 @@ private:
     std::vector<std::string> englishNames;
     
     
-    // init for cards and
+    // init for cards and 
     bool readXml(std::string filePath, SDL_Renderer* r);
     bool readStoryXml(std::string filePath, SDL_Renderer* r);
     
     //settings
     bool readXmlSettings(std::string filePath, SDL_Renderer* r);
+
 public:
     CardHandler(std::string mediaPath, std::string storyPath, SDL_Renderer* r);
-    
+
     std::vector<Card*> getCurrentCard();
     std::vector<Card*> getAll();
     std::vector<SDL_Event> getFrameEvents();
     Menu getMenu();
-    
+
     void addEvent(SDL_Event e);
-    
+
     void HandleEvents(bool &lang);
     void changeCat(float t);
-    
+
     void sort();
-    
+
     void render(SDL_Renderer* r, bool swede);
     
     void clearEvents();
 
     unsigned int backgorundColor [4]; //Reed from the XMLfile settings.xml
-    
 };
 
 #endif // CARDHANDLER_H_INC

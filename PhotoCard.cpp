@@ -14,8 +14,8 @@ PhotoCard::PhotoCard()
     Card();
 }
 
-PhotoCard::PhotoCard(std::vector<std::string> inCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath, SDL_Renderer* r)
-: Card(inCat, inSvH, inSvT, inEnH, inEnT, inPos, inVel, textPath, r)
+PhotoCard::PhotoCard(std::vector<std::string> inSvCat, std::vector<std::string> inEnCat, std::string inSvH, std::string inSvT, std::string inEnH, std::string inEnT, glm::vec3 inPos, glm::vec2 inVel, std::string textPath, SDL_Renderer* r)
+    : Card(inSvCat, inEnCat, inSvH, inSvT, inEnH, inEnT, inPos, inVel, textPath, r)
 {
     texIndex = tex_generator++;
     loadingTex(r, textPath);
@@ -56,13 +56,13 @@ void PhotoCard::render( SDL_Renderer* gRenderer, bool swede) // Blir error atm
     if (swede) {
         if (getReading()) {
             SDL_RenderCopyEx( gRenderer, readSv[texIndex], NULL, &renderQuad, getAngle(), NULL, SDL_FLIP_NONE );
-            
+
         }
         else {
             SDL_RenderCopyEx( gRenderer, headSv[texIndex], NULL, &renderQuad, getAngle(), NULL, SDL_FLIP_NONE );
-            
+
         }
-        
+
     }
     else {
         if (getReading()) {
@@ -75,7 +75,7 @@ void PhotoCard::render( SDL_Renderer* gRenderer, bool swede) // Blir error atm
         }
     }
     
-    
+
 }
 
 void PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
@@ -116,7 +116,7 @@ void PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
     SDL_Rect renderQuad = {w/50 , w/50, w, h };
     SDL_RenderCopyEx( r, imgTexture , NULL, &renderQuad, NULL, NULL, SDL_FLIP_NONE );
     
-    
+
     int header_w, header_h;
     SDL_QueryTexture(headersSv[infoIndex], NULL, NULL, &header_w, &header_h);
     double f = 1.0;
@@ -197,10 +197,10 @@ void PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
     
     SDL_Rect textQuad = {w/25 + 10 + smaller_w, w/25 + w/10 + w/20 + 10 , static_cast<int>(text_w)  , static_cast<int>(text_h)};
     SDL_RenderCopyEx(r, infoTextSv[infoIndex], NULL, &textQuad, 0, NULL, SDL_FLIP_NONE);
-    
+
     SDL_Rect arrowQuad2 = {w/2, h - w/20, w/25, w/25};
     SDL_RenderCopyEx(r, arrow, NULL, &arrowQuad2, NULL, NULL, SDL_FLIP_VERTICAL);
-    
+
     readSv.push_back(newTexture);
     
     // English head
@@ -267,7 +267,7 @@ void PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
     
     catRect = {w/10 + center, w/25+ w/10 + w/180, static_cast<int>(cat_w), static_cast<int>(cat_h)};
     SDL_RenderCopyEx(r, catTextEn[infoIndex], NULL, &catRect, 0, NULL, SDL_FLIP_NONE);
-    
+        
     SDL_QueryTexture(infoTextEn[infoIndex], NULL, NULL, &text_w, &text_h);
     if (text_w > w - w/25 - 20) {
         f = (w - w/25 - 20)/static_cast<double>(text_w);;

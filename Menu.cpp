@@ -8,20 +8,20 @@
 #include "Menu.h"
 
 Menu::Menu(int h, SDL_Renderer* r, std::vector<Category> cats, std::vector<std::string> sv, std::vector<std::string> en)
-: width(SCREEN_WIDTH - 2*h)
-, height(h)
-, posX(h)
-, posY(SCREEN_HEIGHT - 1.5*h)
+    : width(SCREEN_WIDTH - 2*h)
+    , height(h)
+    , posX(h)
+    , posY(SCREEN_HEIGHT - 1.5*h)
 {
     categories = cats.size();
     currentCat = 0;
-    pixPerCat = (width - 5.5*height)/categories;
+    pixPerCat = (width - 5*height)/categories;
     
     stories = sv.size();
     currentStory = 0;
-    pixPerStory = (width - 7*height)/stories;
+    pixPerStory = (width - 6.5*height)/stories;
     
-    square = posX + 3*height;
+    square = posX + 2.5*height;
     
     loadingText(r,cats, sv, en);
     loadingTexture(r);
@@ -31,7 +31,7 @@ Menu::Menu(int h, SDL_Renderer* r, std::vector<Category> cats, std::vector<std::
 Menu::~Menu()
 {
     //Deallocate
-    
+
 }
 
 bool Menu::loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<std::string> sv, std::vector<std::string> en){
@@ -39,9 +39,9 @@ bool Menu::loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<
     bool success = true;
     //SDL_Texture* newTexture = NULL;
     SDL_Surface* textSurface = NULL;
-    
-    
-    
+
+
+
     if( TTF_Init() == -1 )
     {
         printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -54,10 +54,10 @@ bool Menu::loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<
         printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
         success = false;
     }
-    
+
     SDL_Color textColor = { 255, 255, 255};
     //std::string newText = "";
-    
+
     for (int i = 0; i < categories; i++) {
         // Swedish text
         textSurface = TTF_RenderText_Blended( gFont, cats[i].getTextSv().c_str(), textColor);
@@ -78,7 +78,7 @@ bool Menu::loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<
             //Get rid of old surface
             SDL_FreeSurface( textSurface );
         }
-        
+
         // English text
         textSurface = TTF_RenderText_Blended( gFont, cats[i].getTextEn().c_str(), textColor);
         if( textSurface == NULL )
@@ -141,7 +141,7 @@ bool Menu::loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<
             SDL_FreeSurface( textSurface );
         }
     }
-    
+
     // Swedish text
     std::string newText = "English";
     textSurface = TTF_RenderText_Blended( gFont, newText.c_str(), textColor);
@@ -162,7 +162,7 @@ bool Menu::loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<
         //Get rid of old surface
         SDL_FreeSurface( textSurface );
     }
-    
+
     // English text
     newText = "Svenska";
     textSurface = TTF_RenderText_Blended( gFont, newText.c_str(), textColor);
@@ -183,10 +183,10 @@ bool Menu::loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<
         //Get rid of old surface
         SDL_FreeSurface( textSurface );
     }
-    
+
     TTF_CloseFont( gFont );
     gFont = NULL;
-    
+
     return success;
 }
 
@@ -194,9 +194,7 @@ void Menu::loadingTexture(SDL_Renderer* r) {
     SDL_Texture* imgTexture = NULL;
     
     //Load image at specified path
-    //SDL_Surface* loadedSurface = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/home.png" ); //change to correct path
-    SDL_Surface* loadedSurface = IMG_Load( "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/icons/home.png" ); //change to correct path
-    
+    SDL_Surface* loadedSurface = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/home.png" );
     if( loadedSurface == NULL )
     {
         printf( "Unable to load image home! SDL_image Error: %s\n", IMG_GetError() );
@@ -218,11 +216,7 @@ void Menu::loadingTexture(SDL_Renderer* r) {
     
     SDL_Texture* imgTexture2 = NULL;
     //Load image at specified path
-    
-    //SDL_Surface* loadedSurface2 = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/story.png" ); //Change to correct path
-    SDL_Surface* loadedSurface2 = IMG_Load( "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/icons/story.png" ); //Change to correct path
-    
-    
+    SDL_Surface* loadedSurface2 = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/story.png" );
     if( loadedSurface2 == NULL )
     {
         printf( "Unable to load image story! SDL_image Error: %s\n", IMG_GetError() );
@@ -244,9 +238,7 @@ void Menu::loadingTexture(SDL_Renderer* r) {
     
     SDL_Texture* imgTexture3 = NULL;
     //Load image at specified path
-    //SDL_Surface* loadedSurface3 = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/updown.png" );
-    SDL_Surface* loadedSurface3 = IMG_Load( "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/icons/updown.png" ); //Change to correct path
-
+    SDL_Surface* loadedSurface3 = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/updown.png" );
     if( loadedSurface3 == NULL )
     {
         printf( "Unable to load image story! SDL_image Error: %s\n", IMG_GetError() );
@@ -265,7 +257,7 @@ void Menu::loadingTexture(SDL_Renderer* r) {
     }
     
     updownIcon = imgTexture3;
-    
+
 }
 
 
@@ -274,20 +266,20 @@ void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
 {
     SDL_SetRenderDrawColor( r, 0x35, 0x35, 0x30, 0xFF );
     
-    SDL_Rect slide = {posX, posY, static_cast<int>(2.5*height), height};
+    SDL_Rect slide = {posX, posY, static_cast<int>(2*height) + 5, height};
     SDL_RenderFillRect(r, &slide);
     
     SDL_Rect firstSquare = {posX, posY, height, height };
     SDL_RenderCopy( r, homeIcon, NULL, &firstSquare );
     
-    SDL_Rect secondSquare = {static_cast<int>(posX + 1.5*height), posY, height, height };
+    SDL_Rect secondSquare = {static_cast<int>(posX + height + 5), posY, height, height };
     SDL_RenderCopy( r, storyIcon, NULL, &secondSquare );
     
     SDL_Rect langQuad = {posX + width - 2*height, posY, 2*height, height};
     SDL_RenderFillRect(r, &langQuad);
     
     SDL_Rect mode {1,1,1,1};
-    
+
     int text_w, text_h;
     double f;
     if (lang) {
@@ -321,7 +313,7 @@ void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
     SDL_Rect menuQuad = {1, 1, 1, 1};
     SDL_Rect chosenQuad = {1,1,1,1};
     if (!story) {
-        menuQuad = {static_cast<int>(posX + 3*height) , posY, static_cast<int>(width - 5.5*height), height};
+        menuQuad = {static_cast<int>(posX + 2.5*height) , posY, static_cast<int>(width - 5*height), height};
         SDL_RenderFillRect( r, &menuQuad );
         
         chosenQuad = {square, posY - 5, pixPerCat, height + 10};
@@ -350,7 +342,7 @@ void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
             
             int smaller_w = (pixPerCat - text_w)/2;
             int smaller_h = (height - text_h)/2;
-            SDL_Rect button = {posX + 3*height + pixPerCat*i + smaller_w, posY + smaller_h, static_cast<int>(text_w) , static_cast<int>(text_h) };
+            SDL_Rect button = {static_cast<int>(posX + 2.5*height) + pixPerCat*i + smaller_w, posY + smaller_h, static_cast<int>(text_w) , static_cast<int>(text_h) };
             
             if (lang) {
                 SDL_RenderCopy( r, svCat[i], NULL, &button );
@@ -362,7 +354,7 @@ void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
         
     }
     else {
-        menuQuad = {static_cast<int>(posX + 3*height) , posY, static_cast<int>(width - 7*height), height};
+        menuQuad = {static_cast<int>(posX + 2.5*height) , posY, static_cast<int>(width - 6.5*height), height};
         SDL_RenderFillRect( r, &menuQuad );
         
         SDL_Rect flippQuad = {static_cast<int>(posX + width - 3.5*height), posY, height, height};
@@ -371,7 +363,7 @@ void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
         
         // posX + 3*height + pixPerStory*currentStory
         chosenQuad = {square, posY - 5, pixPerStory, height + 10};
-        mode = {static_cast<int>(posX + 1.5*height) - 5, posY - 5, height + 10, height + 10 };
+        mode = {static_cast<int>(posX + height) , posY - 5, height + 10, height + 10 };
         
         
         //int text_w, text_h;
@@ -397,7 +389,7 @@ void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
             
             int smaller_w = (pixPerStory - text_w)/2;
             int smaller_h = (height - text_h)/2;
-            SDL_Rect button = {posX + 3*height + pixPerStory*i + smaller_w, posY + smaller_h, static_cast<int>(text_w) , static_cast<int>(text_h) };
+            SDL_Rect button = {static_cast<int>(posX + 2.5*height) + pixPerStory*i + smaller_w, posY + smaller_h, static_cast<int>(text_w) , static_cast<int>(text_h) };
             
             if (lang) {
                 SDL_RenderCopy( r, svStory[i], NULL, &button );
@@ -420,9 +412,9 @@ void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
     SDL_SetRenderDrawColor( r, 0xB0, 0xB0, 0xB0, 0x50 );
     SDL_RenderFillRect( r, &chosenQuad );
     SDL_RenderFillRect( r, &mode );
+
     
-    
-    
+
 }
 
 
@@ -438,10 +430,10 @@ bool Menu::handleEvent( SDL_Event* e , bool &lang, bool &story, bool &flipp) {
                     break;
                     
                 case SDL_MOUSEMOTION:
-                    if (!story && x > posX + 3*height && x < posX + width - 2.5*height) {
+                    if (!story && x > posX + 2.5*height && x < posX + width - 2.5*height) {
                         return moveEvent(x, y, story);
                     }
-                    else if (story && x > posX + 3*height && x < posX + width - 4*height) {
+                    else if (story && x > posX + 2.5*height && x < posX + width - 4*height) {
                         return moveEvent(x, y, story);
                     }
                     else {
@@ -459,37 +451,39 @@ bool Menu::handleEvent( SDL_Event* e , bool &lang, bool &story, bool &flipp) {
         else {
             isMoving = false;
             if (!story) {
-                square = posX + 3*height + pixPerCat*currentCat;
+                square = posX + 2.5*height + pixPerCat*currentCat;
             }
             else {
-                square = posX + 3*height + pixPerStory*currentStory;
+                square = posX + 2.5*height + pixPerStory*currentStory;
             }
             pressed = 0;
         }
-        
+
     }
     
     /*
      if (e->type == SDL_FINGERDOWN ) {
-     int x = e->tfinger.x * SCREEN_WIDTH;
-     int y = e->tfinger.y * SCREEN_HEIGHT;
-     return downEvent(x, y, lang, story);
+        int x = e->tfinger.x * SCREEN_WIDTH;
+        int y = e->tfinger.y * SCREEN_HEIGHT;
+        return downEvent(x, y, lang, story);
      }*/
     return false;
 }
 
 bool Menu::downEvent(int x, int y, bool &lang, bool &story, bool &flipp) {
-    
+
     if (x < posX + height)
     {
         story = false;
         flipp = false;
         //currentStory = 0;
-        square = posX + 3*height;
+        //square = posX + 3*height;
+        upEvent(story);
         return true;
     }
-    else if (x < posX + 2.5*height) {
+    else if (x < posX + 2*height + 5) {
         story = true;
+        upEvent(story);
         return true;
     }
     else if (x > posX + width - 2*height) {
@@ -497,14 +491,14 @@ bool Menu::downEvent(int x, int y, bool &lang, bool &story, bool &flipp) {
         return true;
     }
     else {
-        int p = posX + 3*height;
+        int p = posX + 2.5*height;
         if (!story) {
             for (int i = 0; i < categories; i++) {
                 p += pixPerCat;
                 if (x < p) {
                     isMoving = true;
                     currentCat = i;
-                    square = posX + 3*height + pixPerCat*currentCat;
+                    square = posX + 2.5*height + pixPerCat*currentCat;
                     pressed = x;
                     return true;
                 }
@@ -516,7 +510,7 @@ bool Menu::downEvent(int x, int y, bool &lang, bool &story, bool &flipp) {
                 if (x < p) {
                     isMoving = true;
                     currentStory = i;
-                    square = posX + 3*height + pixPerStory*currentStory;
+                    square = posX + 2.5*height + pixPerStory*currentStory;
                     pressed = x;
                     return true;
                 }
@@ -528,7 +522,7 @@ bool Menu::downEvent(int x, int y, bool &lang, bool &story, bool &flipp) {
         }
         
     }
-    
+
     return false;
 }
 
@@ -538,38 +532,38 @@ bool Menu::moveEvent(int x, int y, bool story) {
         pressed = x;
         
         if (!story) {
-            if (square < posX + 3*height ) {
-                square = posX + 3*height;
+            if (square < posX + 2.5*height ) {
+                square = posX + 2.5*height;
                 currentCat = 0;
                 
             }
-            else if (square > posX + 3*height + pixPerCat*(categories - 1)) {
-                square = posX + 3*height + pixPerCat*(categories - 1);
+            else if (square > posX + 2.5*height + pixPerCat*(categories - 1)) {
+                square = posX + 2.5*height + pixPerCat*(categories - 1);
                 currentCat = categories - 1;
             }
             
-            if (currentCat < (categories - 1) && square > posX + 3*height + pixPerCat*(currentCat+1) - pixPerCat/4) {
+            if (currentCat < (categories - 1) && square > posX + 2.5*height + pixPerCat*(currentCat+1) - pixPerCat/4) {
                 currentCat++;
             }
-            else if (currentCat > 0 && square < posX + 3*height + pixPerCat*(currentCat-1) + pixPerCat/4) {
+            else if (currentCat > 0 && square < posX + 2.5*height + pixPerCat*(currentCat-1) + pixPerCat/4) {
                 currentCat--;
             }
         }
         else {
-            if (square < posX + 3*height ) {
-                square = posX + 3*height;
+            if (square < posX + 2.5*height ) {
+                square = posX + 2.5*height;
                 currentStory = 0;
                 
             }
-            else if (square > posX + 3*height + pixPerStory*(stories-1)) {
-                square = posX + 3*height + pixPerStory*(stories-1);
+            else if (square > posX + 2.5*height + pixPerStory*(stories-1)) {
+                square = posX + 2.5*height + pixPerStory*(stories-1);
                 currentStory = (stories-1);
             }
             
-            if (currentStory < (stories-1) && square > posX + 3*height + pixPerStory*(currentStory+1) - pixPerStory/4) {
+            if (currentStory < (stories-1) && square > posX + 2.5*height + pixPerStory*(currentStory+1) - pixPerStory/4) {
                 currentStory++;
             }
-            else if (currentStory > 0 && square < posX + 3*height + pixPerStory*(currentStory-1) + pixPerStory/4) {
+            else if (currentStory > 0 && square < posX + 2.5*height + pixPerStory*(currentStory-1) + pixPerStory/4) {
                 currentStory--;
             }
         }
@@ -581,10 +575,10 @@ bool Menu::moveEvent(int x, int y, bool story) {
 bool Menu::upEvent(bool story) {
     isMoving = false;
     if (!story) {
-        square = posX + 3*height + pixPerCat*currentCat;
+        square = posX + 2.5*height + pixPerCat*currentCat;
     }
     else {
-        square = posX + 3*height + pixPerStory*currentStory;
+        square = posX + 2.5*height + pixPerStory*currentStory;
     }
     return true;
 }
@@ -599,7 +593,7 @@ int Menu::getStory() {
 
 void Menu::changeCategory() {
     currentCat = (currentCat + 1)%categories;
-    square = posX + 3*height + pixPerCat*currentCat;
+    square = posX + 2.5*height + pixPerCat*currentCat;
 }
 
 
