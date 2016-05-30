@@ -37,6 +37,7 @@ private:
     int posY;
     int width;
     int height;
+    unsigned int color[4];
     
     bool isMoving = false;
     int square;
@@ -63,6 +64,7 @@ private:
 
     bool loadingText(SDL_Renderer* r, std::vector<Category> cats, std::vector<std::string> sv, std::vector<std::string> en);
     void loadingTexture(SDL_Renderer* r);
+    bool loadingColor(SDL_Renderer* r);
     
     bool downEvent(int x, int y, bool &lang, bool &story, bool &flipp);
     bool moveEvent(int x, int y, bool story);

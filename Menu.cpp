@@ -25,6 +25,7 @@ Menu::Menu(int h, SDL_Renderer* r, std::vector<Category> cats, std::vector<std::
     
     loadingText(r,cats, sv, en);
     loadingTexture(r);
+    loadingColor(r);
     //isSwedish = true;
 }
 
@@ -260,11 +261,70 @@ void Menu::loadingTexture(SDL_Renderer* r) {
 
 }
 
+bool Menu::loadingColor(SDL_Renderer* r)
+{
+    // getting the string through an ifstream
+    std::ifstream ifs(xmlSettings, std::ios::in);
+    if(!ifs.is_open())
+    {
+        return false;
+    }
+    
+    // making it the right format (char) for the parsing to xml doc
+    std::string xml_str;
+    xml_str.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+    
+    // creating a xml_document and parsing the xml-file, making a DOM-tree
+    rapidxml::xml_document<> doc;
+    try
+    {
+        doc.parse<0>((char*)xml_str.c_str());
+    }
+    catch (...)
+    {
+        return false;
+    }
+    
+    
+    // accesing the first node in the file
+    rapidxml::xml_node<>* content = doc.first_node("content");
+    
+    ///-------SETTINGS------------///
+    rapidxml::xml_node<>* second = content->first_node("Menu");
+    // Backgorundcolors
+    unsigned int bColorR;
+    std::stringstream sR;
+    sR << std::hex << second->first_attribute("background_color_r")->value();
+    sR >> std::hex  >> bColorR;
+    color[0] = bColorR;
+    
+    unsigned int bColorG;
+    std::stringstream sG;
+    sG << std::hex << second->first_attribute("background_color_g")->value();
+    sG >> std::hex >> bColorG;
+    color[1] = bColorG;
+    
+    unsigned int bColorB;
+    std::stringstream sB;
+    sB << std::hex << second->first_attribute("background_color_b")->value();
+    sB >> std::hex >> bColorB;
+    color[2] = bColorB;
+    
+    unsigned int   bColorA;
+    std::stringstream sA;
+    sA << std::hex << second->first_attribute("background_color_a")->value() << std::hex;
+    sA >> std::hex >>bColorA;
+    color[3] = bColorA;
+    
+    return true;
+}
+
 
 
 void Menu::renderMenu(SDL_Renderer* r, bool lang, bool story)
 {
     SDL_SetRenderDrawColor( r, 0x35, 0x35, 0x30, 0xFF );
+    SDL_SetRenderDrawColor(r, color[0], color[1], color[2], color[3]);
     
     SDL_Rect slide = {posX, posY, static_cast<int>(2*height) + 5, height};
     SDL_RenderFillRect(r, &slide);
