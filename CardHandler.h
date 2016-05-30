@@ -37,11 +37,9 @@ private:
     std::vector<std::string> englishNames;
     
     
-    // init for cards and 
+    // init for cards and stories
     bool readXml(std::string filePath, SDL_Renderer* r);
     bool readStoryXml(std::string filePath, SDL_Renderer* r);
-    
-    //settings
     bool readXmlSettings(std::string filePath, SDL_Renderer* r);
 
 public:
@@ -62,8 +60,9 @@ public:
     void render(SDL_Renderer* r, bool swede);
     
     void clearEvents();
-
+    
     unsigned int backgorundColor [4]; //Reed from the XMLfile settings.xml
+
 };
 
 #endif // CARDHANDLER_H_INC

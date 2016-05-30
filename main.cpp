@@ -27,9 +27,6 @@ bool initWindow();
 void close();
 
 bool sorting( Card* a,  Card* b) {return a->getLifeTime() < b->getLifeTime(); }
-std::string pathToFiles ="/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos"; //change for specific computer
-//std::string pathToFiles ="/Users/my/Documents/LiU/Kandidat/SDL_tutorial"; //change for specific computer
-//std::string pathToFiles ="C:/Users/Oscar"; //change for specific computer
 
 
 // global window and renderer to the window
@@ -62,22 +59,16 @@ SDL_Texture* Card::arrow = NULL;
 int main(int argc, char*args[])
 {
     bool isSwedish = true;
-    
-    // initiation of the cards, read the xml-file and save cards to theCards
-/*    std::string xmlPath1 = pathToFiles + "/media/write.xml";
-    std::string xmlStory1 = pathToFiles + "/stories/stories.xml";
-    std::cout << "1 " << xmlPath1 << std::endl;*/
-    
-    std::string xmlPath = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/media/write.xml";
-    std::string xmlStory = "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/stories/stories.xml";
-    
-    
+
     clock_t startClock;
     if (!initWindow()) {
         printf("Failed the window \n");
     }
     else {
         SDL_SetWindowFullscreen(gWindow,SDL_WINDOW_FULLSCREEN);
+        int w, h;
+        SDL_GetWindowSize(gWindow, &w, &h);
+        std::cout << "Width of window: " << w << " and height of window: " << h << std::endl;
         std::cout << " testing " << std::endl;
         CardHandler ch = CardHandler(xmlPath, xmlStory, gRenderer);
         bool quit = false;
@@ -94,44 +85,44 @@ int main(int argc, char*args[])
                 {
                     quit = true;
                 }
-                
+
                 ch.addEvent(e);
-                
+
             }
-            
+
             ch.HandleEvents(isSwedish);
             
             // begin render
             //Clear screen
-            SDL_SetRenderDrawColor( gRenderer, ch.backgorundColor[0], ch.backgorundColor[1], ch.backgorundColor[2], ch.backgorundColor[3]); // Backgroundcolor generated from xml-file
+            //SDL_SetRenderDrawColor( gRenderer, 0x15, 0x15, 0x10, 0xFF);
+            SDL_SetRenderDrawColor( gRenderer, ch.backgorundColor[0], ch.backgorundColor[1], ch.backgorundColor[2], ch.backgorundColor[3]);
             SDL_RenderClear( gRenderer );
             time = clock() - startClock;
-            
+
             time = time/CLOCKS_PER_SEC;
             ch.changeCat(time);
             startClock = clock();
-            
+
             ch.render(gRenderer, isSwedish);
-            
+
             //Update screen
             SDL_RenderPresent( gRenderer );
             // end of render
             ch.clearEvents();
         }
     }
-    
+
     close();
-    
+
     return 0;
 }
-
 
 
 SDL_Texture* loadingT(std::string path)
 {
     //The final texture
     SDL_Texture* newTexture = NULL;
-    
+
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
     if( loadedSurface == NULL )
@@ -146,11 +137,11 @@ SDL_Texture* loadingT(std::string path)
         {
             printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
         }
-        
+
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
     }
-    
+
     return newTexture;
 }
 
@@ -158,7 +149,7 @@ bool initWindow()
 {
     //Initialization flag
     bool success = true;
-    
+
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
@@ -172,9 +163,9 @@ bool initWindow()
         {
             printf( "Warning: Linear texture filtering not enabled!" );
         }
-        
+
         //Create window
-        gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+        gWindow = SDL_CreateWindow( "Mikrokosmos", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
         if( gWindow == NULL )
         {
             printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -194,7 +185,7 @@ bool initWindow()
                 //Initialize renderer color
                 SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
                 SDL_SetRenderDrawBlendMode( gRenderer, SDL_BLENDMODE_BLEND);
-                
+
                 //Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
                 if( !( IMG_Init( imgFlags ) & imgFlags ) )
@@ -205,21 +196,21 @@ bool initWindow()
             }
         }
     }
-    
+
     return success;
 }
 
 
 void close()
 {
-    
-    
+
+
     //Destroy window
     SDL_DestroyRenderer( gRenderer );
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
     gRenderer = NULL;
-    
+
     //Quit SDL subsystems
     IMG_Quit();
     SDL_Quit();

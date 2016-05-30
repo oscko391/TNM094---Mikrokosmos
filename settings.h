@@ -9,8 +9,11 @@
 #ifndef SDL_tutorial_settings_h
 #define SDL_tutorial_settings_h
 
-const int SCREEN_WIDTH = 1425; // Flyttas till main sen?
-const int SCREEN_HEIGHT = 850;
+const int SCREEN_WIDTH = 1440; 
+const int SCREEN_HEIGHT = 900;
 const double EPSILON = 10e-04;
 
+const std::string xmlSettings = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/SDL_tutorial/settings.xml";
+const std::string xmlPath = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/media/write.xml"; 
+const std::string xmlStory = "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/stories/stories.xml";
 #endif

@@ -135,7 +135,10 @@ bool StoryHandler::readXml(std::string filePath, SDL_Renderer* r, std::vector<st
                     ssSv << inside->first_node()->next_sibling()->value();
                     std::string get;
                     getline(ssSv, get);
-                    seText.append(get);
+                    while (ssSv) {
+                        seText.append(get);
+                        getline(ssSv, get);
+                    }
 
                 }
                 else
@@ -145,7 +148,10 @@ bool StoryHandler::readXml(std::string filePath, SDL_Renderer* r, std::vector<st
                     ssEn << inside->first_node()->next_sibling()->value();
                     std::string get;
                     getline(ssEn, get);
-                    enText.append(get);
+                    while (ssEn) {
+                        enText.append(get);
+                        getline(ssEn, get);
+                    }
 
                 }
                 

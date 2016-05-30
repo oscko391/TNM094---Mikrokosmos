@@ -188,8 +188,8 @@ void PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
         text_w *= f;
         text_h *= f;
     }
-    if (text_h > h - w/25 - w/10 - w/20 - 20 ) {
-        f = (h - w/25 - w/10 - w/20 - 20)/static_cast<double>(text_h);;
+    if (text_h > h - w/25 - w/5 - 20 ) {
+        f = (h - w/25 - w/5 - 20)/static_cast<double>(text_h);;
         text_w *= f;
         text_h *= f;
     }
@@ -274,8 +274,8 @@ void PhotoCard::loadingTex(SDL_Renderer* r, std::string path)
         text_w *= f;
         text_h *= f;
     }
-    if (text_h > h - w/25 - w/10 - w/20 - 20 ) {
-        f = (h - w/25 - w/10 - w/20 - 20)/static_cast<double>(text_h);;
+    if (text_h > h - w/25 - w/5 - 20 ) {
+        f = (h - w/25 - w/5 - 20)/static_cast<double>(text_h);;
         text_w *= f;
         text_h *= f;
     }

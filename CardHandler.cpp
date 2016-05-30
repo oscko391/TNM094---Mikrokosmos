@@ -4,9 +4,10 @@ CardHandler::CardHandler(std::string mediaPath, std::string storyPath, SDL_Rende
     :allStories(StoryHandler(r))
 {
     readXml(mediaPath, r);
+    readXmlSettings(xmlSettings, r);
     currentCards = catCard[0];
     allStories.readXml(storyPath, r, swedishNames, englishNames);
-    theMenu = Menu(35, r, vecCat, swedishNames, englishNames);
+    theMenu = Menu(SCREEN_HEIGHT/22, r, vecCat, swedishNames, englishNames);
     addedTime = 2.0;
     isStory = false;
 }
@@ -158,10 +159,11 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
                 sSv << inside->first_node()->next_sibling()->value();
                 std::string get;
                 getline(sSv, get);
-                seText.append(get);
-                seText.append("\n\n");
-                getline(sSv, get);
-                seText.append(get);
+                while (sSv) {
+                    seText.append(get);
+                    //seText.append("\n\n");
+                    getline(sSv, get);
+                }
             }
             else
             {
@@ -170,10 +172,11 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
                 sEn << inside->first_node()->next_sibling()->value();
                 std::string get;
                 getline(sEn, get);
-                enText.append(get);
-                enText.append("\n\n");
-                getline(sEn, get);
-                enText.append(get);
+                while (sEn) {
+                    enText.append(get);
+                    //enText.append("\n\n");
+                    getline(sEn, get);
+                }
             }
 
         }
@@ -226,11 +229,8 @@ bool CardHandler::readXml(std::string filePath, SDL_Renderer* r)
     return true;
 }
 
-
-
 bool CardHandler::readXmlSettings(std::string filePath, SDL_Renderer* r)
 {
-    std::cout << "xml" << std::endl;
     // getting the string through an ifstream
     std::ifstream ifs(filePath, std::ios::in);
     if(!ifs.is_open())
@@ -258,36 +258,34 @@ bool CardHandler::readXmlSettings(std::string filePath, SDL_Renderer* r)
     rapidxml::xml_node<>* content = doc.first_node("content");
     
     ///-------SETTINGS------------///
-    for (rapidxml::xml_node<>* second = content->first_node("CardHandler"); second <= content->last_node("CardHandler"); second = second->next_sibling())
-    {
-        // Backgorundcolors
-        unsigned int bColorR;
-        std::stringstream sR;
-        sR << std::hex << second->first_attribute("background_color_r")->value();
-        sR >> std::hex  >> bColorR;
-        backgorundColor[0] = bColorR;
-        
-        unsigned int bColorG;
-        std::stringstream sG;
-        sG << std::hex << second->first_attribute("background_color_g")->value();
-        sG >> std::hex >> bColorG;
-        backgorundColor[1] = bColorG;
-        
-        unsigned int bColorB;
-        std::stringstream sB;
-        sB << std::hex << second->first_attribute("background_color_b")->value();
-        sB >> std::hex >> bColorB;
-        backgorundColor[2] = bColorB;
-        
-        unsigned int   bColorA;
-        std::stringstream sA;
-        sA << std::hex << second->first_attribute("background_color_a")->value() << std::hex;
-        sA >> std::hex >>bColorA;
-        backgorundColor[3] = bColorA;
-    }
+    rapidxml::xml_node<>* second = content->first_node("CardHandler");
+    // Backgorundcolors
+    unsigned int bColorR;
+    std::stringstream sR;
+    sR << std::hex << second->first_attribute("background_color_r")->value();
+    sR >> std::hex  >> bColorR;
+    backgorundColor[0] = bColorR;
+    
+    unsigned int bColorG;
+    std::stringstream sG;
+    sG << std::hex << second->first_attribute("background_color_g")->value();
+    sG >> std::hex >> bColorG;
+    backgorundColor[1] = bColorG;
+    
+    unsigned int bColorB;
+    std::stringstream sB;
+    sB << std::hex << second->first_attribute("background_color_b")->value();
+    sB >> std::hex >> bColorB;
+    backgorundColor[2] = bColorB;
+    
+    unsigned int   bColorA;
+    std::stringstream sA;
+    sA << std::hex << second->first_attribute("background_color_a")->value() << std::hex;
+    sA >> std::hex >>bColorA;
+    backgorundColor[3] = bColorA;
     
     return true;
-} //------
+}
 
 
 void CardHandler::changeCat(float t) {
