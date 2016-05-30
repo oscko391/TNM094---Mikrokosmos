@@ -11,10 +11,7 @@ SDL_Texture* StoryHandler::loadArrow(SDL_Renderer* r){
     SDL_Texture* imgTexture = NULL;
     
     //Load image at specified path
-//    SDL_Surface* loadedSurface = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/arrow2.png" );
-    SDL_Surface* loadedSurface = IMG_Load( "/Users/madeleinerapp/Documents/LiU/Githubmappen/TNM094---Mikrokosmos/icons/arrow2.png" );
-
-    
+    SDL_Surface* loadedSurface = IMG_Load( "/Users/my/Documents/LiU/Kandidat/SDL_tutorial/icons/arrow2.png" );
     if( loadedSurface == NULL )
     {
         printf( "Unable to load image arrow! SDL_image Error: %s\n", IMG_GetError() );
@@ -183,6 +180,12 @@ void StoryHandler::setStory(int s) {
         currentCard = 0;
         sizeStory = storyCards[currentStory].size();
     }
+}
+
+void StoryHandler::resetStory() {
+    currentStory = 0;
+    currentCard = 0;
+    sizeStory = storyCards[0].size();
 }
 
 

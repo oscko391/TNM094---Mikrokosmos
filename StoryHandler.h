@@ -41,6 +41,7 @@ public:
     bool readXml(std::string filePath, SDL_Renderer* r, std::vector<std::string> &svNames, std::vector<std::string> &enNames);
     
     void setStory(int s);
+    void resetStory();
     bool& getFlipp();
     
 };
